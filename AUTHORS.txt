@@ -1,0 +1,2 @@
+Colin Percival <cperciva [@at] freebsd [dot] org>
+Austin Seipp <mad [dot] one [@at] gmail [dot] com>
