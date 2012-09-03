@@ -1,4 +1,5 @@
 /*-
+ * Copyright 2012 Austin Seipp
  * Copyright 2003-2005 Colin Percival
  * All rights reserved
  *
@@ -70,13 +71,13 @@ static off_t offtin(u_char *buf)
   return y;
 }
 
-bool valid_header(unsigned char* patchf)
+bool valid_header(u_char* patchf)
 {
   /* Check for appropriate magic */
   return (memcmp(patchf, "BSDIFF40", 8) == 0);
 }
 
-ssize_t bspatch_newsize(unsigned char* patch)
+ssize_t bspatch_newsize(u_char* patch)
 {
   if (!valid_header(patch))
     return -1;
@@ -123,7 +124,7 @@ int bspatch(u_char* old,   ssize_t   oldsize,
 
     /* Sanity-check */
     if(newpos+ctrl[0]>newsize)
-      errx(1,"Corrupt patch\n");
+      return -2;
 
     /* Read diff string */
     memcpy(new + newpos, diffblock, ctrl[0]);
@@ -140,7 +141,7 @@ int bspatch(u_char* old,   ssize_t   oldsize,
 
     /* Sanity-check */
     if(newpos+ctrl[1]>newsize)
-      errx(1,"Corrupt patch\n");
+      return -2;
 
     /* Read extra string */
     memcpy(new + newpos, extrablock, ctrl[1]);
