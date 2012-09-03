@@ -1,4 +1,4 @@
-# Miniature, portable version of bsdiff.
+# minibsdiff: a miniature, portable version of bsdiff.
 
 Colin Percival's [bsdiff][] is a popular tool for creating and applying binary
 patches to software. This is a stripped down copy of `bsdiff` that's designed
