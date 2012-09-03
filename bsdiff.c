@@ -205,7 +205,7 @@ static void offtout(off_t x,u_char *buf)
 
 int bsdiff(u_char* old, off_t oldsize,
            u_char* new, off_t newsize,
-           u_char* patch)
+           u_char** patchp)
 {
   off_t *I,*V;
   off_t scan,pos,len;
@@ -219,8 +219,16 @@ int bsdiff(u_char* old, off_t oldsize,
   u_char buf[8];
   u_char header[32];
   u_char *fileblock;
+  u_char *patch;
 
   off_t ctrllen;
+
+  /* Sanity checks */
+  if (*patchp != NULL) return -1;
+  /* Allocate for size of patch. Worst case, the files are totally different,
+   * so we'll require new+old amount of space. Add slop for safety. */
+  if ((*patchp = malloc(oldsize+newsize+1024)) == NULL) return -1;
+  patch = *patchp;
 
   /* Allocate oldsize+1 bytes instead of oldsize bytes to ensure
      that we never try to malloc(0) and get a NULL pointer */

@@ -111,8 +111,7 @@ int bspatch(u_char* old,   ssize_t   oldsize,
 
   /* Set up our output; allocate newsize+1 so we never malloc(0) */
   *newsz = newsize;
-  if ((*newp = malloc(newsize+1)) == NULL)
-    return -1;
+  if ((*newp = malloc(newsize+1)) == NULL) return -1;
   new = *newp;
 
   /* Get pointers into the header metadata */

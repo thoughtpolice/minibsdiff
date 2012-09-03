@@ -132,19 +132,10 @@ diff(const char* oldf, const char* newf, const char* patchf)
   newsz = read_file(newf, &new);
   printf("Old file = %lu bytes\nNew file = %lu bytes\n", oldsz, newsz);
 
-  /* Debugging */
-  /* fwrite(old, 1, oldsz, stdout); */
-  /* fwrite(new, 1, newsz, stdout); */
-
-  /* Allocate for size of patch. Worst case, the files are totally different,
-   * so we'll require new+old amount of space.
-   */
-  patchsz = oldsz + newsz + 1024; /* Just to be safe */
-  patch = zmalloc(patchsz);
-
   /* Compute delta */
   printf("Computing binary delta...\n");
-  res = bsdiff(old, oldsz, new, newsz, patch);
+  patch = NULL;
+  res = bsdiff(old, oldsz, new, newsz, &patch);
   if (res <= 0) barf("bsdiff() failed!");
   patchsz = res;
   printf("sizeof(delta('%s', '%s')) = %lu bytes\n", oldf, newf, patchsz);

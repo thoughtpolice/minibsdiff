@@ -32,9 +32,8 @@
 typedef uint8_t u_char;
 #endif
 
-/* NOTA BENE: patch must be at least be 'oldsize+newsize' in length! */
 int bsdiff(u_char* old, off_t oldsize,
            u_char* new, off_t newsize,
-           u_char* patch);
+           u_char** patch);
 
 #endif /* _MINIBSDIFF_H_ */
