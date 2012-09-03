@@ -66,7 +66,6 @@ int bspatch(u_char* old,   ssize_t   oldsz,
 int bsdiff(u_char* old, off_t oldsize,
            u_char* new, off_t newsize,
            u_char** patch);
-
 ```
 
 For an full example of using the API, see `minibsdiff.c`, which roughly
