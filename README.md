@@ -1,12 +1,12 @@
 # Miniature, portable version of bsdiff.
 
-Colin Percival's [bsdiff][] is a popular tool for creating and
-applying binary patches to software. This is a stripped down copy of
-`bsdiff` that's designed to be portable and reusable as a library in
-your own software (if you wanted to say, create your own update
-system.) Many people end up reusing bsdiff, but I haven't found a
-standalone copy of the library somewhere that I could easily reuse, so
-I wrote one.
+Colin Percival's [bsdiff][] is a popular tool for creating and applying binary
+patches to software. This is a stripped down copy of `bsdiff` that's designed
+to be portable and reusable as a library in your own software (if you wanted to
+say, create your own update system.) Many people end up reusing bsdiff (it's
+stable, well-known, small, and has a good license,) but I haven't found a
+standalone copy of the library somewhere that I could easily reuse, so I wrote
+one.
 
 The main differences:
 
