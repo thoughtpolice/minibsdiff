@@ -10,18 +10,18 @@ one.
 
 The main differences:
 
-  * Control/data/extra blocks in the patch output are not `bzip2`
-    compressed. You'll have to apply your own compression method.
+  * Control/data/extra blocks in the patch output are not `bzip2` compressed.
+    You'll have to apply your own compression method.
 
-  * The code has been refactored into a reusable API, consisting of a
-    few simple functions in `bsdiff.h` and `bspatch.h`.
+  * The code has been refactored into a reusable API, consisting of a few
+    simple functions in `bsdiff.h` and `bspatch.h`.
 
 [travis-ci.org](http://travis-ci.org) results: [![Build Status](https://secure.travis-ci.org/thoughtpolice/minibsdiff.png?branch=master)](http://travis-ci.org/thoughtpolice/minibsdiff)
 
 # Usage
 
-Just include `bsdiff.{c,h}` and `bspatch.{c,h}` in your source tree
-and you're ready to go.
+Just include `bsdiff.{c,h}` and `bspatch.{c,h}` in your source tree and you're
+ready to go.
 
 This is the entire API:
 
@@ -29,7 +29,8 @@ This is the entire API:
 /* TODO FIXME */
 ```
 
-For an example of using the API, see `test.c`. You can build the
+For an full example of using the API, see `minibsdiff.c`, which roughly
+reimplements the standard `bsdiff/bspatch` in a single tool. You can build the
 example application by running `make`.
 
 # Join in
