@@ -20,6 +20,8 @@ The main differences:
   * The code has been refactored into a reusable API, consisting of a few
     simple functions in `bsdiff.h` and `bspatch.h`.
 
+  * It works everywhere (even under MSVC.)
+
 [travis-ci.org](http://travis-ci.org) results: [![Build Status](https://secure.travis-ci.org/thoughtpolice/minibsdiff.png?branch=master)](http://travis-ci.org/thoughtpolice/minibsdiff)
 
 # Usage
@@ -30,7 +32,41 @@ ready to go.
 This is the entire API:
 
 ```c
-/* TODO FIXME */
+/** Check if a patch header is valid */
+bool bspatch_valid_header(u_char* patch, ssize_t patchsz);
+
+/*-
+ * Apply a patch to a byte array.
+ *
+ * The input pointer 'newp' must be NULL before usage.
+ *
+ * Returns -1 if memory can't be allocated, or the input
+ * pointer '*inp' is not NULL. Returns -2 if the patch
+ * header is invalid. Returns -3 if the patch itself is
+ * corrupt. Otherwise, returns 0.
+ *
+ * The output pointer 'newp' must be free()'d after usage
+ * if this function is successful.
+ */
+int bspatch(u_char* old,   ssize_t   oldsz,
+            u_char* patch, ssize_t patchsz,
+            u_char** newp, ssize_t* newsz);
+
+/*-
+ * Create a patch from two byte arrays.
+ *
+ * The input pointer 'patch' must be NULL before usage.
+ *
+ * Returns -1 if memory can't be allocated, or `patch` is not NULL. Otherwise,
+ * returns the size of the patch stored in `patch`.
+ *
+ * The `patch` variable must be explicitly free()'d
+ * if the function is successful after it's used.
+ */
+int bsdiff(u_char* old, off_t oldsize,
+           u_char* new, off_t newsize,
+           u_char** patch);
+
 ```
 
 For an full example of using the API, see `minibsdiff.c`, which roughly
