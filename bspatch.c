@@ -71,7 +71,7 @@ static off_t offtin(u_char *buf)
   return y;
 }
 
-bool valid_header(u_char* patch, ssize_t patchsize)
+bool bspatch_valid_header(u_char* patch, ssize_t patchsize)
 {
   ssize_t newsize, ctrllen, datalen;
 
@@ -102,7 +102,7 @@ int bspatch(u_char* old,   ssize_t   oldsize,
 
   /* Sanity checks */
   if (*newp != NULL) return -1;
-  if (!valid_header(patch, patchsize)) return -2;
+  if (!bspatch_valid_header(patch, patchsize)) return -2;
 
   /* Read lengths from patch header */
   ctrllen=offtin(patch+8);

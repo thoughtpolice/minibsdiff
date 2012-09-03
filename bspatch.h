@@ -32,7 +32,7 @@
 typedef uint8_t u_char;
 #endif
 
-bool valid_header(u_char* patch, ssize_t patchsz);
+bool bspatch_valid_header(u_char* patch, ssize_t patchsz);
 int bspatch(u_char* old,   ssize_t   oldsz,
             u_char* patch, ssize_t patchsz,
             u_char** newp, ssize_t* newsz);
