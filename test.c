@@ -26,6 +26,9 @@
 #include "bspatch.h"
 #include "bsdiff.h"
 
+/* ------------------------------------------------------------------------- */
+/* -- Utilities ------------------------------------------------------------ */
+
 #define bail() (err(1, "%s", progname))
 #define barf(msg) (errx(1, "%s", msg))
 
@@ -82,6 +85,9 @@ write_file(const char* f, u_char* buf, long sz)
 
   return;
 }
+
+/* ------------------------------------------------------------------------- */
+/* -- Main routines -------------------------------------------------------- */
 
 void
 diff(const char* oldf, const char* newf, const char* patchf)
@@ -164,6 +170,9 @@ patch(const char* inf, const char* patchf, const char* outf)
   printf("Successfully applied patch; new file is %s\n", outf);
   exit(EXIT_SUCCESS);
 }
+
+/* ------------------------------------------------------------------------- */
+/* -- Driver --------------------------------------------------------------- */
 
 int
 main(int ac, char* av[])
