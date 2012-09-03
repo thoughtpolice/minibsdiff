@@ -178,12 +178,10 @@ int
 main(int ac, char* av[])
 {
   progname = av[0];
-
   if (ac != 5) usage();
 
   if (memcmp(av[1], "gen", 3) == 0)
     diff(av[2], av[3], av[4]);
-
   if (memcmp(av[1], "app", 3) == 0)
     patch(av[2], av[3], av[4]);
 
