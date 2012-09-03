@@ -42,7 +42,7 @@ See [AUTHORS.txt](https://raw.github.com/thoughtpolice/minibsdiff/master/AUTHORS
 
 # License
 
-BSD3. See `LICENSE.txt` for terms of copyright and redistribution.
+2-clause BSD. See `LICENSE.txt` for terms of copyright and redistribution.
 
 [bsdiff]: http://www.daemonology.net/bsdiff/
 [issue tracker]: http://github.com/thoughtpolice/minibsdiff/issues
