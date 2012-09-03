@@ -8,6 +8,8 @@ stable, well-known, small, and has a good license,) but I haven't found a
 standalone copy of the library somewhere that I could easily reuse, so I wrote
 one.
 
+This code is based on bsdiff v4.3.
+
 The main differences:
 
   * Control/data/extra blocks in the patch output are not `bzip2` compressed.
