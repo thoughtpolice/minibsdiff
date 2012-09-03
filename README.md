@@ -16,6 +16,8 @@ The main differences:
   * The code has been refactored into a reusable API, consisting of a
     few simple functions in `bsdiff.h` and `bspatch.h`.
 
+[travis-ci.org](http://travis-ci.org) results: [![Build Status](https://secure.travis-ci.org/thoughtpolice/minibsdiff.png?branch=master)](http://travis-ci.org/thoughtpolice/minibsdiff)
+
 # Usage
 
 Just include `bsdiff.{c,h}` and `bspatch.{c,h}` in your source tree
