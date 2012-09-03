@@ -11,7 +11,9 @@ one.
 The main differences:
 
   * Control/data/extra blocks in the patch output are not `bzip2` compressed.
-    You'll have to apply your own compression method.
+    You'll have to apply your own compression method. **This means that the
+    patches produced by this library are incompatible with those produced by
+    the classic bsdiff tool!**
 
   * The code has been refactored into a reusable API, consisting of a few
     simple functions in `bsdiff.h` and `bspatch.h`.
