@@ -177,14 +177,9 @@ patch(const char* inf, const char* patchf, const char* outf)
   patchsz = read_file(patchf, &patchp);
   printf("Old file = %lu bytes\nPatch file = %lu bytes\n", insz, patchsz);
 
-  /* Figure out new file size */
-  newsz = bspatch_newsize(patchp);
-  if (newsz <= 0) barf("Corrupt patch\n");
-  newp = zmalloc(newsz);
-  printf("New file size = %zu bytes\n", newsz);
-
   /* Apply delta */
-  res = bspatch(inp, insz, patchp, patchsz, newp);
+  newp = NULL;
+  res = bspatch(inp, insz, patchp, patchsz, &newp, &newsz);
   if (res != 0) barf("bspatch() failed!");
 
   /* Write new file */

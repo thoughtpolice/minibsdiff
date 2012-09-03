@@ -71,42 +71,49 @@ static off_t offtin(u_char *buf)
   return y;
 }
 
-bool valid_header(u_char* patchf)
+bool valid_header(u_char* patch, ssize_t patchsize)
 {
-  /* Check for appropriate magic */
-  return (memcmp(patchf, "BSDIFF40", 8) == 0);
-}
+  ssize_t newsize, ctrllen, datalen;
 
-ssize_t bspatch_newsize(u_char* patch)
-{
-  if (!valid_header(patch))
-    return -1;
+  if (patchsize < 32) return false;
 
-  return offtin(patch+24);
+  /* Make sure magic and header fields are valid */
+  if(memcmp(patch, "BSDIFF40", 8) != 0) return false;
+
+  ctrllen=offtin(patch+8);
+  datalen=offtin(patch+16);
+  newsize=offtin(patch+24);
+  if((ctrllen<0) || (datalen<0) || (newsize<0))
+    return false;
+
+  return true;
 }
 
 int bspatch(u_char* old,   ssize_t   oldsize,
             u_char* patch, ssize_t patchsize,
-            u_char* new)
+            u_char** newp,  ssize_t* newsz)
 {
   ssize_t newsize,ctrllen,datalen;
   u_char *ctrlblock, *diffblock, *extrablock;
   off_t oldpos,newpos;
   off_t ctrl[3];
   off_t i;
+  u_char* new;
 
-  /* Validate header */
-  if (patchsize < 32)
-    return -1;
-  if (!valid_header(patch))
-    return -1;
+  /* Sanity checks */
+  if (*newp != NULL) return -1;
+  if (!valid_header(patch, patchsize)) return -2;
 
   /* Read lengths from patch header */
   ctrllen=offtin(patch+8);
   datalen=offtin(patch+16);
   newsize=offtin(patch+24);
-  if((ctrllen<0) || (datalen<0) || (newsize<0))
+
+  /* Set up our output; allocate newsize+1 so we never malloc(0) */
+  *newsz = newsize;
+  if ((*newp = malloc(newsize+1)) == NULL)
     return -1;
+  new = *newp;
 
   /* Get pointers into the header metadata */
   ctrlblock  = patch+32;
@@ -124,10 +131,10 @@ int bspatch(u_char* old,   ssize_t   oldsize,
 
     /* Sanity-check */
     if(newpos+ctrl[0]>newsize)
-      return -2;
+      return -3; /* Corrupt patch */
 
     /* Read diff string */
-    memcpy(new + newpos, diffblock, ctrl[0]);
+    memcpy(new  + newpos, diffblock, ctrl[0]);
     diffblock += ctrl[0];
 
     /* Add old data to diff string */
@@ -141,7 +148,7 @@ int bspatch(u_char* old,   ssize_t   oldsize,
 
     /* Sanity-check */
     if(newpos+ctrl[1]>newsize)
-      return -2;
+      return -3; /* Corrupt patch */
 
     /* Read extra string */
     memcpy(new + newpos, extrablock, ctrl[1]);
