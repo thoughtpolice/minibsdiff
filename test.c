@@ -58,12 +58,12 @@ read_file(const char* f, u_char** buf)
   FILE* fp;
   long fsz;
 
-  if ( ((fp = fopen(f, "r"))    == NULL) ||
-       (fseek(fp, 0, SEEK_END)  != 0)    ||
-       ((fsz = ftell(fp))       == -1)   ||
-       ((*buf = zmalloc(fsz+1)) == NULL) ||
-       (fseek(fp, 0, SEEK_SET)  != 0)    ||
-       (fread(*buf, 1, fsz, fp) != fsz)  ||
+  if ( ((fp = fopen(f, "r"))    == NULL)        ||
+       (fseek(fp, 0, SEEK_END)  != 0)           ||
+       ((fsz = ftell(fp))       == -1)          ||
+       ((*buf = zmalloc(fsz+1)) == NULL)        ||
+       (fseek(fp, 0, SEEK_SET)  != 0)           ||
+       (fread(*buf, 1, fsz, fp) != (size_t)fsz) ||
        (fclose(fp)              != 0)
      ) bail();
 
@@ -75,8 +75,8 @@ write_file(const char* f, u_char* buf, long sz)
 {
   FILE* fp;
 
-  if ( ((fp = fopen(f, "w")) == NULL) ||
-       (fwrite(buf, 1, sz, fp) != sz) ||
+  if ( ((fp = fopen(f, "w")) == NULL)         ||
+       (fwrite(buf, 1, sz, fp) != (size_t)sz) ||
        (fclose(fp)             != 0)
      ) bail();
 
