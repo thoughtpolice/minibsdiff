@@ -45,10 +45,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <string.h>
-#include <err.h>
-
-#include <unistd.h>
-#include <fcntl.h>
+#include <sys/types.h>
 
 #include "bspatch.h"
 #include "bsdiff.h"
@@ -56,19 +53,24 @@
 /* ------------------------------------------------------------------------- */
 /* -- Utilities ------------------------------------------------------------ */
 
-#define bail() (err(1, "%s", progname))
-#define barf(msg) (errx(1, "%s", msg))
-
 static char* progname;
+
+static void
+barf(const char* msg)
+{
+  printf("%s: ERROR: %s", progname, msg);
+  exit(EXIT_FAILURE);
+}
 
 static void
 usage(void)
 {
-  errx(1, "usage:\n\n"
-          "Generate patch:"
-          "\t$ %s gen <v1> <v2> <patch>\n"
-          "Apply patch:"
-          "\t$ %s app <v1> <patch> <v2>\n", progname, progname);
+  printf("usage:\n\n"
+         "Generate patch:"
+         "\t$ %s gen <v1> <v2> <patch>\n"
+         "Apply patch:"
+         "\t$ %s app <v1> <patch> <v2>\n", progname, progname);
+  exit(EXIT_FAILURE);
 }
 
 long
@@ -84,7 +86,7 @@ read_file(const char* f, u_char** buf)
        (fseek(fp, 0, SEEK_SET)  != 0)           ||
        (fread(*buf, 1, fsz, fp) != (size_t)fsz) ||
        (fclose(fp)              != 0)
-     ) bail();
+     ) barf("Couldn't open file for reading!\n");
 
   return fsz;
 }
@@ -97,7 +99,7 @@ write_file(const char* f, u_char* buf, long sz)
   if ( ((fp = fopen(f, "w")) == NULL)         ||
        (fwrite(buf, 1, sz, fp) != (size_t)sz) ||
        (fclose(fp)             != 0)
-     ) bail();
+     ) barf("Couldn't open file for writing!\n");
 
   return;
 }
