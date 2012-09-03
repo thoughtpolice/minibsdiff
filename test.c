@@ -5,7 +5,7 @@
  *
  * Compile with:
  *
- *   $ cc -Wall -std=gnu99 -O2 test.c bsdiff.c bspatch.c
+ *   $ cc -Wall -std=c99 -O2 test.c bsdiff.c bspatch.c
  *
  * Usage:
  *
