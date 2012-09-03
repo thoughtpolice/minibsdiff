@@ -154,7 +154,7 @@ patch(const char* inf, const char* patchf, const char* outf)
   newsz = bspatch_newsize(patchp);
   if (newsz <= 0) barf("Corrupt patch\n");
   newp = zmalloc(newsz);
-  printf("New file size = %lu bytes\n", newsz);
+  printf("New file size = %zu bytes\n", newsz);
 
   /* Apply delta */
   res = bspatch(inp, insz, patchp, patchsz, newp);
