@@ -41,7 +41,7 @@ bool bspatch_valid_header(u_char* patch, ssize_t patchsz);
  * The input pointer 'newp' must be NULL before usage.
  *
  * Returns -1 if memory can't be allocated, or the input
- * pointer '*inp' is not NULL. Returns -2 if the patch
+ * pointer `*inp` is not NULL. Returns -2 if the patch
  * header is invalid. Returns -3 if the patch itself is
  * corrupt. Otherwise, returns 0.
  *
@@ -57,7 +57,7 @@ int bspatch(u_char* old,   ssize_t   oldsz,
  *
  * The input pointer 'patch' must be NULL before usage.
  *
- * Returns -1 if memory can't be allocated, or `patch` is not NULL. Otherwise,
+ * Returns -1 if memory can't be allocated, or `*patch` is not NULL. Otherwise,
  * returns the size of the patch stored in `patch`.
  *
  * The `patch` variable must be explicitly free()'d
