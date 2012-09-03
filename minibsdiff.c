@@ -59,17 +59,6 @@
 #define bail() (err(1, "%s", progname))
 #define barf(msg) (errx(1, "%s", msg))
 
-#define max(a,b) \
-       ({ typeof (a) _a = (a); \
-           typeof (b) _b = (b); \
-         _a > _b ? _a : _b; })
-
-#define zmalloc(sz) \
-    ({ void* _ptr = malloc(sz); \
-       if (_ptr == NULL) bail(); \
-       memset(_ptr, 0xAA, sz); \
-       _ptr; })
-
 static char* progname;
 
 static void
@@ -91,7 +80,7 @@ read_file(const char* f, u_char** buf)
   if ( ((fp = fopen(f, "r"))    == NULL)        ||
        (fseek(fp, 0, SEEK_END)  != 0)           ||
        ((fsz = ftell(fp))       == -1)          ||
-       ((*buf = zmalloc(fsz+1)) == NULL)        ||
+       ((*buf = malloc(fsz+1))  == NULL)        ||
        (fseek(fp, 0, SEEK_SET)  != 0)           ||
        (fread(*buf, 1, fsz, fp) != (size_t)fsz) ||
        (fclose(fp)              != 0)
