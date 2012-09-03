@@ -23,6 +23,12 @@ The main differences:
 Just include `bsdiff.{c,h}` and `bspatch.{c,h}` in your source tree
 and you're ready to go.
 
+This is the entire API:
+
+```c
+/* TODO FIXME */
+```
+
 For an example of using the API, see `test.c`. You can build the
 example application by running `make`.
 
