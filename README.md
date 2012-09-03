@@ -57,8 +57,9 @@ int bspatch(u_char* old,   ssize_t   oldsz,
  *
  * The input pointer 'patch' must be NULL before usage.
  *
- * Returns -1 if memory can't be allocated, or `*patch` is not NULL. Otherwise,
- * returns the size of the patch stored in `patch`.
+ * Returns -1 if memory can't be allocated, or `*patch` is
+ * not NULL. Otherwise, returns the size of the patch stored
+ * in `patch`.
  *
  * The `patch` variable must be explicitly free()'d
  * if the function is successful after it's used.
