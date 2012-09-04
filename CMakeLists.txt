@@ -15,7 +15,7 @@ check_include_file(stdbool.h HAVE_STDBOOL_H)
 check_include_file(stdint.h HAVE_STDINT_H)
 
 if (MSVC)
-  set(OPTIONS "/W4 /WL /WX")
+  set(OPTIONS "/W4 /WL")
   if (MSVC11)
     set(OPTIONS "${OPTIONS} /analyze")
   endif ()

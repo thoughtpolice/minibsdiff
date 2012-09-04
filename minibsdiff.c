@@ -65,7 +65,7 @@ barf(const char* msg)
   exit(EXIT_FAILURE);
 }
 
-static void
+static void 
 usage(void)
 {
   printf("usage:\n\n"
@@ -146,7 +146,7 @@ diff(const char* oldf, const char* newf, const char* patchf)
   exit(EXIT_SUCCESS);
 }
 
-static void
+static void 
 patch(const char* inf, const char* patchf, const char* outf)
 {
   u_char* inp;
@@ -185,6 +185,7 @@ patch(const char* inf, const char* patchf, const char* outf)
 int
 main(int ac, char* av[])
 {
+  /* WIN32 FIXME: av[0] becomes the full path to minibsdiff */
   progname = av[0];
   if (ac != 5) usage();
 
