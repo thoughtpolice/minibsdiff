@@ -27,10 +27,21 @@
 #ifndef _MINIBSDIFF_H_
 #define _MINIBSDIFF_H_
 
+/* ------------------------------------------------------------------------- */
+/* -- Miscellaneous -------------------------------------------------------- */
+
+/* Duplicated to keep code small. Keep in sync with bspatch.h! */
 #ifndef _MINIBSDIFF_U_CHAR_T_
 #define _MINIBSDIFF_U_CHAR_T_
 typedef uint8_t u_char;
-#endif
+#endif /* _MINIBSDIFF_U_CHAR_T_ */
+
+#ifdef _MSC_VER
+typedef SSIZE_T ssize_t;
+#endif /* _MSC_VER */
+
+/* ------------------------------------------------------------------------- */
+/* -- Public API ----------------------------------------------------------- */
 
 int bsdiff(u_char* old, off_t oldsize,
            u_char* new, off_t newsize,

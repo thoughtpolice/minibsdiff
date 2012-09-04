@@ -1,6 +1,7 @@
 /*-
+ * stdbool-msvc.h - simple replacement for stdboo.h under Visual Studio
+ *
  * Copyright 2012 Austin Seipp
- * Copyright 2003-2005 Colin Percival
  * All rights reserved
  *
  * Redistribution and use in source and binary forms, with or without
@@ -24,28 +25,20 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef _MINIBSPATCH_H_
-#define _MINIBSPATCH_H_
+#ifndef _MSC_VER // [
+#error "Use this header only with Microsoft Visual C++ compilers!"
+#endif // _MSC_VER ]
 
-/* ------------------------------------------------------------------------- */
-/* -- Miscellaneous -------------------------------------------------------- */
+#ifndef _MSC_STDINT_H_ // [
+#define _MSC_STDINT_H_
 
-/* Duplicated to keep code small. Keep in sync with bsdiff.h! */
-#ifndef _MINIBSDIFF_U_CHAR_T_
-#define _MINIBSDIFF_U_CHAR_T_
-typedef uint8_t u_char;
-#endif /* _MINIBSDIFF_U_CHAR_T_ */
+#if _MSC_VER > 1000
+#pragma once
+#endif
 
-#ifdef _MSC_VER
-typedef SSIZE_T ssize_t;
-#endif /* _MSC_VER */
+typedef unsigned char bool;
 
-/* ------------------------------------------------------------------------- */
-/* -- Public API ----------------------------------------------------------- */
+#define true 1
+#define false 0
 
-bool bspatch_valid_header(u_char* patch, ssize_t patchsz);
-int bspatch(u_char* old,   ssize_t   oldsz,
-            u_char* patch, ssize_t patchsz,
-            u_char** newp, ssize_t* newsz);
-
-#endif /* _MINIBSPATCH_H_ */
+#endif // _MSC_STDINT_H_ ]

@@ -40,12 +40,17 @@
  *   $ ./a.out app <v1> <patch> <v2>
  */
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>
-#include <stdbool.h>
+#include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
+#ifdef _MSC_VER
+#include "stdint-msvc.h"
+#include "stdbool-msvc.h"
+#else
+#include <stdint.h>
+#include <stdbool.h>
+#endif /* _MSC_VER */
 
 #include "bspatch.h"
 #include "bsdiff.h"

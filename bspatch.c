@@ -29,12 +29,18 @@
 __FBSDID("$FreeBSD: src/usr.bin/bsdiff/bspatch/bspatch.c,v 1.1 2005/08/06 01:59:06 cperciva Exp $");
 #endif
 
+#include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <stdint.h>
-#include <stdbool.h>
 #include <string.h>
 #include <sys/types.h>
+#ifdef _MSC_VER
+#include "stdint-msvc.h"
+#include "stdbool-msvc.h"
+#else
+#include <stdint.h>
+#include <stdbool.h>
+#endif /* _MSC_VER */
 
 #include "bspatch.h"
 

@@ -1,4 +1,5 @@
 /*-
+ * Copyright 2012 Austin Seipp
  * Copyright 2003-2005 Colin Percival
  * All rights reserved
  *
@@ -28,11 +29,17 @@
 __FBSDID("$FreeBSD: src/usr.bin/bsdiff/bsdiff/bsdiff.c,v 1.1 2005/08/06 01:59:05 cperciva Exp $");
 #endif
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>
+#include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
+#ifdef _MSC_VER
+#include "stdint-msvc.h"
+#include "stdbool-msvc.h"
+#else
+#include <stdint.h>
+#include <stdbool.h>
+#endif /* _MSC_VER */
 
 #include "bsdiff.h"
 
