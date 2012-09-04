@@ -35,7 +35,6 @@ __FBSDID("$FreeBSD: src/usr.bin/bsdiff/bspatch/bspatch.c,v 1.1 2005/08/06 01:59:
 #include <stdbool.h>
 #include <string.h>
 #include <sys/types.h>
-#include <err.h>
 
 #include "bspatch.h"
 

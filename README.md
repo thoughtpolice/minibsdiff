@@ -70,8 +70,13 @@ int bsdiff(u_char* old, off_t oldsize,
 ```
 
 For an full example of using the API, see `minibsdiff.c`, which roughly
-reimplements the standard `bsdiff/bspatch` in a single tool. You can build the
-example application by running `make`.
+reimplements the standard `bsdiff/bspatch` in a single tool. You can
+build it by:
+
+  * Running `make` on Linux/OS X.
+  * Running `make` on Windows will build with MinGW, assuming it is
+    in `C:\MinGW`
+  * MSVC: TODO FIXME
 
 # Join in
 
