@@ -27,6 +27,15 @@
 #ifndef _MINIBSDIFF_H_
 #define _MINIBSDIFF_H_
 
+#ifdef _MSC_VER
+#include <Windows.h>
+#include "stdint-msvc.h"
+#include "stdbool-msvc.h"
+#else
+#include <stdint.h>
+#include <stdbool.h>
+#endif /* _MSC_VER */
+
 /* ------------------------------------------------------------------------- */
 /* -- Miscellaneous -------------------------------------------------------- */
 

@@ -29,8 +29,8 @@
 #error "Use this header only with Microsoft Visual C++ compilers!"
 #endif // _MSC_VER ]
 
-#ifndef _MSC_STDINT_H_ // [
-#define _MSC_STDINT_H_
+#ifndef _MSC_STDBOOL_H_ // [
+#define _MSC_STDBOOL_H_
 
 #if _MSC_VER > 1000
 #pragma once
@@ -41,4 +41,4 @@ typedef unsigned char bool;
 #define true 1
 #define false 0
 
-#endif // _MSC_STDINT_H_ ]
+#endif // _MSC_STDBOOL_H_ ]

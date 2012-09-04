@@ -40,17 +40,14 @@
  *   $ ./a.out app <v1> <patch> <v2>
  */
 
+#ifdef _MSC_VER
+#define _CRT_SECURE_NO_WARNINGS 1
+#endif /* _MSC_VER */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
-#ifdef _MSC_VER
-#include "stdint-msvc.h"
-#include "stdbool-msvc.h"
-#else
-#include <stdint.h>
-#include <stdbool.h>
-#endif /* _MSC_VER */
 
 #include "bspatch.h"
 #include "bsdiff.h"
