@@ -76,7 +76,9 @@ build it by:
   * Running `make` on Linux/OS X.
   * Running `make` on Windows will build with MinGW, assuming it is
     in `C:\MinGW`
-  * MSVC: TODO FIXME
+  * MSVC 2010: Just add all the files to your project and it will work.
+    `minibsdiff` works too. You can also generate solution files with
+    cmake (see below.)
   * Finally, there's a `CMakeLists.txt` file for portable cross-platform
     building. You can use it to build on all systems with lots of
     configurations (Ninja/makefiles on Windows/Lin/OSX, MSVC, etc.)
