@@ -1,4 +1,4 @@
-ifdef ($(MINGW),YES)
+ifeq ($(MINGW),YES)
 EXT=.exe
 else
 EXT=
