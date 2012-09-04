@@ -15,12 +15,21 @@ The main differences:
   * Control/data/extra blocks in the patch output are not `bzip2` compressed.
     You'll have to apply your own compression method. **This means that the
     patches produced by this library are incompatible with those produced by
-    the classic bsdiff tool!**
+    the classic bsdiff tool!** The header format has changed appropriately
+    so they are both incompatible with each other.
 
   * The code has been refactored into a reusable API, consisting of a few
-    simple functions in `bsdiff.h` and `bspatch.h`.
+    simple functions in `bsdiff.h` and `bspatch.h`. It should be easily
+    usable from any programming language. It has zero external
+    dependencies.
 
   * It works everywhere (even under MSVC.)
+
+  * Because there are no external dependencies and it's so small, minibsdiff is
+    great place to start **if you need to customize bsdiff yourself**! You'll
+    inevitably want to do this (you'll at least want to change the header magic
+    number for your own projects), and most of the work is already done for
+    you.
 
 [travis-ci.org](http://travis-ci.org) results: [![Build Status](https://secure.travis-ci.org/thoughtpolice/minibsdiff.png?branch=master)](http://travis-ci.org/thoughtpolice/minibsdiff)
 
