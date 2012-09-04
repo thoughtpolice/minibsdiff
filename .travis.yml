@@ -3,4 +3,3 @@ script: make
 compiler:
   - clang
   - gcc
-
