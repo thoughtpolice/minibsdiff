@@ -43,8 +43,8 @@ typedef SSIZE_T ssize_t;
 /* ------------------------------------------------------------------------- */
 /* -- Public API ----------------------------------------------------------- */
 
-int bsdiff(u_char* old, off_t oldsize,
-           u_char* new, off_t newsize,
+int bsdiff(u_char* oldp, off_t oldsize,
+           u_char* newp, off_t newsize,
            u_char** patch);
 
 #endif /* _MINIBSDIFF_H_ */

@@ -156,24 +156,24 @@ static void qsufsort(off_t *I,off_t *V,u_char *old,off_t oldsize)
   for(i=0;i<oldsize+1;i++) I[V[i]]=i;
 }
 
-static off_t matchlen(u_char *old,off_t oldsize,u_char *new,off_t newsize)
+static off_t matchlen(u_char *oldp,off_t oldsize,u_char *newp,off_t newsize)
 {
   off_t i;
 
   for(i=0;(i<oldsize)&&(i<newsize);i++)
-    if(old[i]!=new[i]) break;
+    if(oldp[i]!=newp[i]) break;
 
   return i;
 }
 
-static off_t search(off_t *I,u_char *old,off_t oldsize,
-                    u_char *new,off_t newsize,off_t st,off_t en,off_t *pos)
+static off_t search(off_t *I,u_char *oldp,off_t oldsize,
+                    u_char *newp,off_t newsize,off_t st,off_t en,off_t *pos)
 {
   off_t x,y;
 
   if(en-st<2) {
-    x=matchlen(old+I[st],oldsize-I[st],new,newsize);
-    y=matchlen(old+I[en],oldsize-I[en],new,newsize);
+    x=matchlen(oldp+I[st],oldsize-I[st],newp,newsize);
+    y=matchlen(oldp+I[en],oldsize-I[en],newp,newsize);
 
     if(x>y) {
       *pos=I[st];
@@ -185,10 +185,10 @@ static off_t search(off_t *I,u_char *old,off_t oldsize,
   };
 
   x=st+(en-st)/2;
-  if(memcmp(old+I[x],new,MIN(oldsize-I[x],newsize))<0) {
-    return search(I,old,oldsize,new,newsize,x,en,pos);
+  if(memcmp(oldp+I[x],newp,MIN(oldsize-I[x],newsize))<0) {
+    return search(I,oldp,oldsize,newp,newsize,x,en,pos);
   } else {
-    return search(I,old,oldsize,new,newsize,st,x,pos);
+    return search(I,oldp,oldsize,newp,newsize,st,x,pos);
   };
 }
 
@@ -210,8 +210,8 @@ static void offtout(off_t x,u_char *buf)
   if(x<0) buf[7]|=0x80;
 }
 
-int bsdiff(u_char* old, off_t oldsize,
-           u_char* new, off_t newsize,
+int bsdiff(u_char* oldp, off_t oldsize,
+           u_char* newp, off_t newsize,
            u_char** patchp)
 {
   off_t *I,*V;
@@ -242,7 +242,7 @@ int bsdiff(u_char* old, off_t oldsize,
   if(((I=malloc((oldsize+1)*sizeof(off_t)))==NULL) ||
      ((V=malloc((oldsize+1)*sizeof(off_t)))==NULL)) return -1;
 
-  qsufsort(I,V,old,oldsize);
+  qsufsort(I,V,oldp,oldsize);
 
   free(V);
 
@@ -271,26 +271,26 @@ int bsdiff(u_char* old, off_t oldsize,
     oldscore=0;
 
     for(scsc=scan+=len;scan<newsize;scan++) {
-      len=search(I,old,oldsize,new+scan,newsize-scan,
+      len=search(I,oldp,oldsize,newp+scan,newsize-scan,
                  0,oldsize,&pos);
 
       for(;scsc<scan+len;scsc++)
         if((scsc+lastoffset<oldsize) &&
-           (old[scsc+lastoffset] == new[scsc]))
+           (oldp[scsc+lastoffset] == newp[scsc]))
           oldscore++;
 
       if(((len==oldscore) && (len!=0)) ||
          (len>oldscore+8)) break;
 
       if((scan+lastoffset<oldsize) &&
-         (old[scan+lastoffset] == new[scan]))
+         (oldp[scan+lastoffset] == newp[scan]))
         oldscore--;
     };
 
     if((len!=oldscore) || (scan==newsize)) {
       s=0;Sf=0;lenf=0;
       for(i=0;(lastscan+i<scan)&&(lastpos+i<oldsize);) {
-        if(old[lastpos+i]==new[lastscan+i]) s++;
+        if(oldp[lastpos+i]==newp[lastscan+i]) s++;
         i++;
         if(s*2-i>Sf*2-lenf) { Sf=s; lenf=i; };
       };
@@ -299,7 +299,7 @@ int bsdiff(u_char* old, off_t oldsize,
       if(scan<newsize) {
         s=0;Sb=0;
         for(i=1;(scan>=lastscan+i)&&(pos>=i);i++) {
-          if(old[pos-i]==new[scan-i]) s++;
+          if(oldp[pos-i]==newp[scan-i]) s++;
           if(s*2-i>Sb*2-lenb) { Sb=s; lenb=i; };
         };
       };
@@ -308,10 +308,10 @@ int bsdiff(u_char* old, off_t oldsize,
         overlap=(lastscan+lenf)-(scan-lenb);
         s=0;Ss=0;lens=0;
         for(i=0;i<overlap;i++) {
-          if(new[lastscan+lenf-overlap+i]==
-             old[lastpos+lenf-overlap+i]) s++;
-          if(new[scan-lenb+i]==
-             old[pos-lenb+i]) s--;
+          if(newp[lastscan+lenf-overlap+i]==
+             oldp[lastpos+lenf-overlap+i]) s++;
+          if(newp[scan-lenb+i]==
+             oldp[pos-lenb+i]) s--;
           if(s>Ss) { Ss=s; lens=i+1; };
         };
 
@@ -320,9 +320,9 @@ int bsdiff(u_char* old, off_t oldsize,
       };
 
       for(i=0;i<lenf;i++)
-        db[dblen+i]=new[lastscan+i]-old[lastpos+i];
+        db[dblen+i]=newp[lastscan+i]-oldp[lastpos+i];
       for(i=0;i<(scan-lenb)-(lastscan+lenf);i++)
-        eb[eblen+i]=new[lastscan+lenf+i];
+        eb[eblen+i]=newp[lastscan+lenf+i];
 
       dblen+=lenf;
       eblen+=(scan-lenb)-(lastscan+lenf);
