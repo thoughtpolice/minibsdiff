@@ -349,7 +349,6 @@ int bsdiff(u_char* oldp, off_t oldsize,
 
   /* Write extra data */
   memcpy(fileblock, eb, eblen);
-  fileblock += eblen;
 
   /* Write the final header */
   memcpy(patch, header, 32);
