@@ -39,7 +39,7 @@ __FBSDID("$FreeBSD: src/usr.bin/bsdiff/bsdiff/bsdiff.c,v 1.1 2005/08/06 01:59:05
 #define MIN(x,y) (((x)<(y)) ? (x) : (y))
 
 /* Header is
-   0  8        "BSDIFF40"
+   0  8       "MBSDIF43"
    8  8       length of bzip2ed ctrl block
    16 8       length of bzip2ed diff block
    24 8       length of new file */
@@ -247,7 +247,7 @@ int bsdiff(u_char* oldp, off_t oldsize,
   eblen=0;
 
   /* Write initial header */
-  memcpy(header,"BSDIFF40",8);
+  memcpy(header,"MBSDIF43",8);
   offtout(0, header + 8);
   offtout(0, header + 16);
   offtout(newsize, header + 24);
