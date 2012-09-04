@@ -26,8 +26,9 @@ The main differences:
 
 # Usage
 
-Just include `bsdiff.{c,h}` and `bspatch.{c,h}` in your source tree and you're
-ready to go.
+Copy `bsdiff.{c,h}`, `bspatch.{c,h}` and `{stdbool,stdint}-msvc.h` in your
+source tree and you're ready to go. You shouldn't need any special build
+settings for it to Just Work(TM).
 
 This is the entire API:
 
