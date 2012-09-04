@@ -76,7 +76,7 @@ usage(void)
   exit(EXIT_FAILURE);
 }
 
-long
+static long
 read_file(const char* f, u_char** buf)
 {
   FILE* fp;
@@ -95,7 +95,7 @@ read_file(const char* f, u_char** buf)
   return fsz;
 }
 
-void
+static void
 write_file(const char* f, u_char* buf, long sz)
 {
   FILE* fp;
@@ -111,7 +111,7 @@ write_file(const char* f, u_char* buf, long sz)
 /* ------------------------------------------------------------------------- */
 /* -- Main routines -------------------------------------------------------- */
 
-void
+static void
 diff(const char* oldf, const char* newf, const char* patchf)
 {
   u_char* old;
@@ -146,7 +146,7 @@ diff(const char* oldf, const char* newf, const char* patchf)
   exit(EXIT_SUCCESS);
 }
 
-void
+static void
 patch(const char* inf, const char* patchf, const char* outf)
 {
   u_char* inp;
