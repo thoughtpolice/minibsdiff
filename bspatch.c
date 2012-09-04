@@ -93,7 +93,7 @@ bool bspatch_valid_header(u_char* patch, ssize_t patchsize)
   return true;
 }
 
-int bspatch(u_char* old,   ssize_t   oldsize,
+int bspatch(u_char* oldp,  ssize_t   oldsize,
             u_char* patch, ssize_t patchsize,
             u_char** newp,  ssize_t* newsz)
 {
@@ -102,7 +102,7 @@ int bspatch(u_char* old,   ssize_t   oldsize,
   off_t oldpos,newpos;
   off_t ctrl[3];
   off_t i;
-  u_char* new;
+  u_char* newpp;
 
   /* Sanity checks */
   if (*newp != NULL) return -1;
@@ -116,7 +116,7 @@ int bspatch(u_char* old,   ssize_t   oldsize,
   /* Set up our output; allocate newsize+1 so we never malloc(0) */
   *newsz = newsize;
   if ((*newp = malloc(newsize+1)) == NULL) return -1;
-  new = *newp;
+  newpp = *newp;
 
   /* Get pointers into the header metadata */
   ctrlblock  = patch+32;
@@ -137,13 +137,13 @@ int bspatch(u_char* old,   ssize_t   oldsize,
       return -3; /* Corrupt patch */
 
     /* Read diff string */
-    memcpy(new  + newpos, diffblock, ctrl[0]);
+    memcpy(newpp + newpos, diffblock, ctrl[0]);
     diffblock += ctrl[0];
 
     /* Add old data to diff string */
     for(i=0;i<ctrl[0];i++)
       if((oldpos+i>=0) && (oldpos+i<oldsize))
-        new[newpos+i]+=old[oldpos+i];
+        newpp[newpos+i]+=oldp[oldpos+i];
 
     /* Adjust pointers */
     newpos+=ctrl[0];
@@ -154,7 +154,7 @@ int bspatch(u_char* old,   ssize_t   oldsize,
       return -3; /* Corrupt patch */
 
     /* Read extra string */
-    memcpy(new + newpos, extrablock, ctrl[1]);
+    memcpy(newpp + newpos, extrablock, ctrl[1]);
     extrablock += ctrl[1];
 
     /* Adjust pointers */

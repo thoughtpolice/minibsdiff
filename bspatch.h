@@ -44,7 +44,7 @@ typedef SSIZE_T ssize_t;
 /* -- Public API ----------------------------------------------------------- */
 
 bool bspatch_valid_header(u_char* patch, ssize_t patchsz);
-int bspatch(u_char* old,   ssize_t   oldsz,
+int bspatch(u_char* oldp,  ssize_t oldsz,
             u_char* patch, ssize_t patchsz,
             u_char** newp, ssize_t* newsz);
 

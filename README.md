@@ -32,6 +32,22 @@ ready to go.
 This is the entire API:
 
 ```c
+/*-
+ * Create a patch from two byte arrays.
+ *
+ * The input pointer 'patch' must be NULL before usage.
+ *
+ * Returns -1 if memory can't be allocated, or `*patch` is
+ * not NULL. Otherwise, returns the size of the patch stored
+ * in `patch`.
+ *
+ * The `patch` variable must be explicitly free()'d
+ * if the function is successful after it's used.
+ */
+int bsdiff(u_char* oldp, off_t oldsize,
+           u_char* newp, off_t newsize,
+           u_char** patch);
+
 /** Check if a patch header is valid */
 bool bspatch_valid_header(u_char* patch, ssize_t patchsz);
 
@@ -48,25 +64,9 @@ bool bspatch_valid_header(u_char* patch, ssize_t patchsz);
  * The output pointer 'newp' must be free()'d after usage
  * if this function is successful.
  */
-int bspatch(u_char* old,   ssize_t   oldsz,
+int bspatch(u_char* oldp,  ssize_t oldsz,
             u_char* patch, ssize_t patchsz,
             u_char** newp, ssize_t* newsz);
-
-/*-
- * Create a patch from two byte arrays.
- *
- * The input pointer 'patch' must be NULL before usage.
- *
- * Returns -1 if memory can't be allocated, or `*patch` is
- * not NULL. Otherwise, returns the size of the patch stored
- * in `patch`.
- *
- * The `patch` variable must be explicitly free()'d
- * if the function is successful after it's used.
- */
-int bsdiff(u_char* old, off_t oldsize,
-           u_char* new, off_t newsize,
-           u_char** patch);
 ```
 
 For an full example of using the API, see `minibsdiff.c`, which roughly
