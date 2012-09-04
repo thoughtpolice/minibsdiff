@@ -1,4 +1,4 @@
 all:
-	$(CC) -Wextra -Wall -std=c99 -O2 bsdiff.c bspatch.c minibsdiff.c -o minibsdiff
+	$(CC) -Wextra -Wall -std=c99 -O2 minibsdiff.c -o minibsdiff
 clean:
 	rm -f minibsdiff *~ *.o

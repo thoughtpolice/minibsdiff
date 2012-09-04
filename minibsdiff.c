@@ -49,8 +49,9 @@
 #include <string.h>
 #include <sys/types.h>
 
-#include "bspatch.h"
-#include "bsdiff.h"
+/* Create one large compilation unit */
+#include "bspatch.c"
+#include "bsdiff.c"
 
 /* ------------------------------------------------------------------------- */
 /* -- Utilities ------------------------------------------------------------ */
