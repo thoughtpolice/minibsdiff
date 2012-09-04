@@ -82,6 +82,7 @@ read_file(const char* f, u_char** buf)
   FILE* fp;
   long fsz;
 
+  fsz = 0;
   if ( ((fp = fopen(f, "r"))    == NULL)        ||
        (fseek(fp, 0, SEEK_END)  != 0)           ||
        ((fsz = ftell(fp))       == -1)          ||
