@@ -77,6 +77,9 @@ build it by:
   * Running `make` on Windows will build with MinGW, assuming it is
     in `C:\MinGW`
   * MSVC: TODO FIXME
+  * Finally, there's a `CMakeLists.txt` file for portable cross-platform
+    building. You can use it to build on all systems with lots of
+    configurations (Ninja/makefiles on Windows/Lin/OSX, MSVC, etc.)
 
 # Join in
 
