@@ -28,7 +28,7 @@ The main differences:
   * Because there are no external dependencies and it's so small, minibsdiff is
     great place to start **if you need to customize bsdiff yourself**! You'll
     inevitably want to do this (you'll at least want to change the header magic
-    number for your own projects), and most of the work is already done for
+    number for your own projects,) and most of the work is already done for
     you.
 
 [travis-ci.org](http://travis-ci.org) results: [![Build Status](https://secure.travis-ci.org/thoughtpolice/minibsdiff.png?branch=master)](http://travis-ci.org/thoughtpolice/minibsdiff)
