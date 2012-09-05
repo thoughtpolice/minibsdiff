@@ -124,10 +124,11 @@ data in the differences (by a factor of 10x or 20x.) In fact, without some sort
 of compression, it practically defeats the purpose of using it in the first
 place!
 
-Not having compression by default is still a feature - it keeps it simple and
-portable, and you can layer it in however you want because the source is small
-and easy to hack. But this should be noted because, realistically, you'll
-always want to compress it at one point or another in the Real World.
+Not having compression by default is still a feature, though - it keeps the
+library simple and portable, and you can layer it in however you want because
+the source is small and easy to hack. But this should be noted because,
+realistically, you'll **always** want to compress it at one point or another in
+the Real World.
 
 ## Building the example program.
 
