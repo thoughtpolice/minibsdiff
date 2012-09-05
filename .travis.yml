@@ -1,12 +1,12 @@
 language: c
-
 matrix:
   include:
-    - script: make
-      compiler:
-        - clang
-        - gcc
-    - script: "rm -rf build && mkdir build && cd build && cmake .. && make"
-      compiler:
-        - clang
-        - gcc
+    - script:   make
+      compiler: clang
+    - script:   make
+      compiler: gcc
+
+    - script:   "rm -rf build && mkdir build && cd build && cmake .. && make"
+      compiler: clang
+    - script:   "rm -rf build && mkdir build && cd build && cmake .. && make"
+      compiler: gcc
