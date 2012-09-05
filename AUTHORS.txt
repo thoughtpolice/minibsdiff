@@ -1,2 +1,3 @@
-Colin Percival <cperciva [@at] freebsd [dot] org>
 Austin Seipp <mad [dot] one [@at] gmail [dot] com>
+Colin Percival <cperciva [@at] freebsd [dot] org>
+Tres Walsh <tres [dot] walsh [@at] mnmlstc [dot] com>
