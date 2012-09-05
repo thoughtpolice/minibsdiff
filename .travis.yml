@@ -1,4 +1,6 @@
 language: c
+script: echo # Dummy rule
+
 matrix:
   include:
     - script:   make

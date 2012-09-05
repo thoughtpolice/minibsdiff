@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.8.9)
+cmake_minimum_required (VERSION 2.8.7) # Required for travis build bots
 project (minibsdiff C)
 
 if (NOT CMAKE_BUILD_TYPE)
