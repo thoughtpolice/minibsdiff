@@ -87,10 +87,9 @@ int bspatch(u_char* oldp,  ssize_t oldsz,
 
 ## Customization notes.
 
-You can change the patcher header's magic number by simply modifying
-`bspatch()` and `bsdiff()` appropriately. There are only two uses of
-the magic field, and they should be obvious. This library uses the
-8-byte magic string `MBSDIF43`.
+You can change the patch header magic number by simply modifying `bspatch()`
+and `bsdiff()` appropriately. There are only two uses of the magic field, and
+they should be obvious. This library uses the 8-byte magic string `MBSDIF43`.
 
 ---
 
