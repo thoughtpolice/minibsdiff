@@ -185,6 +185,7 @@ patch(const char* inf, const char* patchf, const char* outf)
 int
 main(int ac, char* av[])
 {
+  /* WIN32 FIXME: av[0] becomes the full path to minibsdiff */
   progname = av[0];
   if (ac != 5) usage();
 
