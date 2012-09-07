@@ -6,7 +6,10 @@ endif
 
 PREFIX?=$(HOME)
 SRC=minibsdiff
-CCOPTS?=-Wall -Wextra -std=c99
+CCOPTS?=-Wall -Wextra -Wmissing-prototypes -Wstrict-prototypes \
+    -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align          \
+    -Wwrite-strings -Wnested-externs                           \
+    -ansi -pedantic -std=c99
 
 SCANBUILD?=scan-build
 SCANOPTS?=-analyze-headers --use-analyzer $(shell which clang)

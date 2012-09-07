@@ -21,13 +21,16 @@ if (MSVC)
   endif ()
 else ()
   set(WARNING_LIST
-    -Wall -W -Wmissing-prototypes -Wstrict-prototypes -Wconversion
+    -Wall -Wextra -Wmissing-prototypes -Wstrict-prototypes
     -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align
-    -Wwrite-strings -Wnested-externs -Wextra)
+    -Wwrite-strings -Wnested-externs
+    # Disable some stuff for now. Maybe one day...
+    # -Wconversion
+    )
   foreach (_warning ${WARNING_LIST})
     set(WARNINGS "${WARNINGS} ${_warning}")
   endforeach ()
-  set(RELEASE_OPTIONS "-O3 -funroll-loops")
+  set(RELEASE_OPTIONS "-O3 -march=native")
   set(DEBUG_OPTIONS "-g -O0")
   set(OPTIONS "${WARNINGS} -ansi -pedantic -std=c99")
 endif ()
