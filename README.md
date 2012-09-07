@@ -1,14 +1,14 @@
 # minibsdiff: a miniature, portable version of bsdiff.
 
-Colin Percival's [bsdiff][] is a popular tool for creating and applying binary
-patches to software. This is a stripped down copy of `bsdiff` that's designed
-to be portable and reusable as a library in your own software (if you wanted to
+Colin Percival's [bsdiff][] is a popular tool for creating and applying patches
+to binary software. This is a stripped down copy of `bsdiff` that's designed to
+be portable and reusable as a library in your own software (if you wanted to
 say, create your own update system.) Many people end up reusing bsdiff (it's
 stable, well-known, small, and has a good license,) but I haven't found a
 standalone copy of the library somewhere that I could easily reuse, so I wrote
 one.
 
-This code is based on bsdiff v4.3.
+This code is based on [bsdiff v4.3](http://www.daemonology.net/bsdiff/bsdiff-4.3.tar.gz).
 
 The main differences:
 
@@ -87,7 +87,7 @@ int bspatch(u_char* oldp,  ssize_t oldsz,
 
 ## Customization notes.
 
-You can change the patch header magic number by simply modifying `bspatch()`
+You can change the patch file's magic number by simply modifying `bspatch()`
 and `bsdiff()` appropriately. There are only two uses of the magic field, and
 they should be obvious. This library uses the 8-byte magic string `MBSDIF43`.
 
@@ -156,9 +156,9 @@ There's also a [BitBucket mirror][bb]:
 
 If you're going to submit a pull request, **sign off on your changes** by using
 `git commit -s`. I manage the `Signed-off by` field like git: by signing off,
-you state that the code agrees by the license statement of the project. An
-`Acked-by` field states that someone has reviewed this code, and it's not
-completely insane at least.
+you acknowledge that the code you are submitting abides by the license of the
+project. An `Acked-by` field states that someone has reviewed this code, and
+it's not completely insane at the very least.
 
 # Authors
 
