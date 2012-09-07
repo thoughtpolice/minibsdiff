@@ -38,7 +38,7 @@ __FBSDID("$FreeBSD: src/usr.bin/bsdiff/bspatch/bspatch.c,v 1.1 2005/08/06 01:59:
 
 /*
   Patch file format:
-  0        8       "MBSDIF43"
+  0        8       BSDIFF_CONFIG_MAGIC (see minibsdiff-config.h)
   8        8       X
   16       8       Y
   24       8       sizeof(newfile)
@@ -75,7 +75,7 @@ bool bspatch_valid_header(u_char* patch, ssize_t patchsize)
   if (patchsize < 32) return false;
 
   /* Make sure magic and header fields are valid */
-  if(memcmp(patch, "MBSDIF43", 8) != 0) return false;
+  if(memcmp(patch, BSDIFF_CONFIG_MAGIC, 8) != 0) return false;
 
   ctrllen=offtin(patch+8);
   datalen=offtin(patch+16);

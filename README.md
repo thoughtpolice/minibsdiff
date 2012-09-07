@@ -41,9 +41,9 @@ The main differences:
 
 ## Building
 
-Copy `bsdiff.{c,h}`, `bspatch.{c,h}` and `{stdbool,stdint}-msvc.h` in your
-source tree and you're ready to go. You shouldn't need any special build
-settings for it to Just Work(TM).
+Copy `bsdiff.{c,h}`, `bspatch.{c,h}`, `minibsdiff-config.h` and
+`{stdbool,stdint}-msvc.h` in your source tree and you're ready to go. You
+shouldn't need any special build settings for it to Just Work(TM).
 
 ## API
 
@@ -85,11 +85,22 @@ int bspatch(u_char* oldp,  ssize_t oldsz,
             u_char** newp, ssize_t* newsz);
 ```
 
+## Building the example program.
+
+For an full example of using the API, see `minibsdiff.c`, which roughly
+reimplements the standard `bsdiff/bspatch` in a single tool (without
+compression.) To build it:
+
+  * Running `make` on Linux or OS X.
+
+  * There is a `CMakeLists.txt` file you can use to generate Ninja, MSVC or
+    MinGW makefile projects for Windows. You can also use the CMakeLists.txt
+    file on Linux/OS X too, of course.
+
 ## Customization notes.
 
-You can change the patch file's magic number by simply modifying `bspatch()`
-and `bsdiff()` appropriately. There are only two uses of the magic field, and
-they should be obvious. This library uses the 8-byte magic string `MBSDIF43`.
+You can change the patch file's magic number by modifying BSDIFF_CONFIG_MAGIC
+in `minibsdiff-config.h`.
 
 ---
 
@@ -130,17 +141,6 @@ the source is small and easy to hack. But this should be noted because,
 realistically, you'll **always** want to compress it at one point or another in
 the Real World.
 
-## Building the example program.
-
-For an full example of using the API, see `minibsdiff.c`, which roughly
-reimplements the standard `bsdiff/bspatch` in a single tool (without
-compression.) To build it:
-
-  * Running `make` on Linux or OS X.
-
-  * There is a `CMakeLists.txt` file you can use to generate Ninja, MSVC or
-    MinGW makefile projects for Windows. You can also use the CMakeLists.txt
-    file on Linux/OS X too, of course.
 
 # Join in
 

@@ -27,27 +27,7 @@
 #ifndef _MINIBSPATCH_H_
 #define _MINIBSPATCH_H_
 
-#ifdef _MSC_VER
-#include <Windows.h>
-#include "stdint-msvc.h"
-#include "stdbool-msvc.h"
-#else
-#include <stdint.h>
-#include <stdbool.h>
-#endif /* _MSC_VER */
-
-/* ------------------------------------------------------------------------- */
-/* -- Miscellaneous -------------------------------------------------------- */
-
-/* Duplicated to keep code small. Keep in sync with bsdiff.h! */
-#ifndef _MINIBSDIFF_U_CHAR_T_
-#define _MINIBSDIFF_U_CHAR_T_
-typedef uint8_t u_char;
-#endif /* _MINIBSDIFF_U_CHAR_T_ */
-
-#ifdef _MSC_VER
-typedef SSIZE_T ssize_t;
-#endif /* _MSC_VER */
+#include "minibsdiff-config.h"
 
 /* ------------------------------------------------------------------------- */
 /* -- Public API ----------------------------------------------------------- */

@@ -10,9 +10,9 @@ endif ()
 
 include(CheckIncludeFile)
 
-check_include_file(sys/types.h HAVE_SYS_TYPES_H)
-check_include_file(stdbool.h HAVE_STDBOOL_H)
-check_include_file(stdint.h HAVE_STDINT_H)
+#check_include_file(sys/types.h HAVE_SYS_TYPES_H)
+#check_include_file(stdbool.h HAVE_STDBOOL_H)
+#check_include_file(stdint.h HAVE_STDINT_H)
 
 if (MSVC)
   set(OPTIONS "/W4 /WL")

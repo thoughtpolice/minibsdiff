@@ -24,16 +24,36 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef _MINIBSDIFF_H_
-#define _MINIBSDIFF_H_
+#ifndef _MINIBSDIFF_CONFIG_H_
+#define _MINIBSDIFF_CONFIG_H_
 
-#include "minibsdiff-config.h"
+#ifdef _MSC_VER
+#include <Windows.h>
+#include "stdint-msvc.h"
+#include "stdbool-msvc.h"
+#else
+#include <stdint.h>
+#include <stdbool.h>
+#endif /* _MSC_VER */
 
 /* ------------------------------------------------------------------------- */
-/* -- Public API ----------------------------------------------------------- */
+/* -- Patch file magic number ---------------------------------------------- */
 
-int bsdiff(u_char* oldp, off_t oldsize,
-           u_char* newp, off_t newsize,
-           u_char** patch);
+/** MUST be 8 bytes long! */
+/** TODO FIXME: we should static_assert this */
+#define BSDIFF_CONFIG_MAGIC "MBSDIF43"
 
-#endif /* _MINIBSDIFF_H_ */
+/* ------------------------------------------------------------------------- */
+/* -- Type definitions ----------------------------------------------------- */
+
+/* Duplicated to keep code small. Keep in sync with bspatch.h! */
+#ifndef _MINIBSDIFF_U_CHAR_T_
+#define _MINIBSDIFF_U_CHAR_T_
+typedef uint8_t u_char;
+#endif /* _MINIBSDIFF_U_CHAR_T_ */
+
+#ifdef _MSC_VER
+typedef SSIZE_T ssize_t;
+#endif /* _MSC_VER */
+
+#endif /* _MINIBSDIFF_CONFIG_H_ */
