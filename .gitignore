@@ -5,4 +5,4 @@ minibsdiff
 *.exe
 *.swp
 
-build/
+build*/
