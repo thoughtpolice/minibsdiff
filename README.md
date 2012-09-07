@@ -99,7 +99,7 @@ compression.) To build it:
 
 ## Customization notes.
 
-You can change the patch file's magic number by modifying BSDIFF_CONFIG_MAGIC
+You can change the patch file's magic number by modifying `BSDIFF_CONFIG_MAGIC`
 in `minibsdiff-config.h`.
 
 ---
