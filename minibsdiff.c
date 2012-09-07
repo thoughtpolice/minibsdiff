@@ -83,7 +83,7 @@ read_file(const char* f, u_char** buf)
   long fsz;
 
   fsz = 0;
-  if ( ((fp = fopen(f, "r"))    == NULL)        ||
+  if ( ((fp = fopen(f, "r+b"))  == NULL)        ||
        (fseek(fp, 0, SEEK_END)  != 0)           ||
        ((fsz = ftell(fp))       == -1)          ||
        ((*buf = malloc(fsz+1))  == NULL)        ||
@@ -100,7 +100,7 @@ write_file(const char* f, u_char* buf, long sz)
 {
   FILE* fp;
 
-  if ( ((fp = fopen(f, "w")) == NULL)         ||
+  if ( ((fp = fopen(f, "w+b")) == NULL)       ||
        (fwrite(buf, 1, sz, fp) != (size_t)sz) ||
        (fclose(fp)             != 0)
      ) barf("Couldn't open file for writing!\n");
