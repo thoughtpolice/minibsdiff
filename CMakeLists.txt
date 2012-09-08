@@ -32,7 +32,7 @@ else ()
   endforeach ()
   set(RELEASE_OPTIONS "-O3 -march=native")
   set(DEBUG_OPTIONS "-g -O0")
-  set(OPTIONS "${WARNINGS} -ansi -pedantic -std=c99")
+  set(OPTIONS "${WARNINGS} -pedantic -std=c99")
 endif ()
 
 set(CMAKE_C_FLAGS_RELEASE "${RELEASE_OPTIONS}")
