@@ -29,6 +29,10 @@
 
 #include "minibsdiff-config.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* ------------------------------------------------------------------------- */
 /* -- Public API ----------------------------------------------------------- */
 
@@ -66,5 +70,9 @@ ssize_t bspatch_newsize(u_char* patch, ssize_t patchsize);
 int bspatch(u_char* oldp,  ssize_t oldsz,
             u_char* patch, ssize_t patchsz,
             u_char* newp,  ssize_t newsz);
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
 
 #endif /* _MINIBSPATCH_H_ */

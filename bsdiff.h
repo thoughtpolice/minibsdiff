@@ -29,6 +29,10 @@
 
 #include "minibsdiff-config.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* ------------------------------------------------------------------------- */
 /* -- Public API ----------------------------------------------------------- */
 
@@ -58,5 +62,9 @@ off_t bsdiff_patchsize_max(off_t oldsize, off_t newsize);
 int bsdiff(u_char* oldp, off_t oldsize,
            u_char* newp, off_t newsize,
            u_char* patch, off_t patchsize);
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
 
 #endif /* _MINIBSDIFF_H_ */
