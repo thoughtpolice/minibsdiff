@@ -1,8 +1,8 @@
 ===============================================================================
 [ minibsdiff contains code from bsdiff; both are under 2-Clause BSD license: ]
 
-Copyright (c) 2003-2005 Colin Percival
 Copyright (c) 2012 Austin Seipp <mad.one@gmail.com>
+Copyright (c) 2003-2005 Colin Percival
 
 All rights reserved.
 
