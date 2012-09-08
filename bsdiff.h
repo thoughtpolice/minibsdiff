@@ -51,6 +51,9 @@ off_t bsdiff_patchsize_max(off_t oldsize, off_t newsize);
  * Otherwise, the return value is the size of the patch that was put in the
  * 'patch' buffer.
  *
+ * This function is memory-intensive, and requires max(17*n,9*n+m)+O(1) bytes
+ * of memory, where n is the size of the new file and m is the size of the old
+ * file. It runs in O((n+m) log n) time.
  */
 int bsdiff(u_char* oldp, off_t oldsize,
            u_char* newp, off_t newsize,

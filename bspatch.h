@@ -59,6 +59,9 @@ ssize_t bspatch_newsize(u_char* patch, ssize_t patchsize);
  * corrupt.
  * Otherwise, returns 0.
  *
+ * This function requires n+m+O(1) bytes of memory, where n is the size of the
+ * old file and m is the size of the new file. It does no allocations.
+ * It runs in O(n+m) time.
  */
 int bspatch(u_char* oldp,  ssize_t oldsz,
             u_char* patch, ssize_t patchsz,
