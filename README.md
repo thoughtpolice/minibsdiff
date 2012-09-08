@@ -4,7 +4,7 @@ Colin Percival's [bsdiff][] is a popular tool for creating and applying patches
 to binary software. This is a stripped down copy of `bsdiff` that's designed to
 be portable and reusable as a library in your own software (if you wanted to
 say, create your own update system.) Many people end up reusing bsdiff (it's
-stable, well-known, small, and has a good license,) but I haven't found a
+stable, well-known, works great, and has a good license,) but I haven't found a
 standalone copy of the library somewhere that I could easily reuse, so I wrote
 one.
 
@@ -29,6 +29,8 @@ The main differences:
     dependencies.
 
   * It works everywhere (even under MSVC.)
+
+  * There's a simple example included that should show you how to get started.
 
   * Because there are no external dependencies and it's so small, **minibsdiff
     is great place to start if you need to customize bsdiff yourself**! You'll
@@ -91,16 +93,19 @@ For an full example of using the API, see `minibsdiff.c`, which roughly
 reimplements the standard `bsdiff/bspatch` in a single tool (without
 compression.) To build it:
 
-  * Running `make` on Linux or OS X.
+  * Running `make` on Linux or OS X. If you have MinGW installed and on
+    your `PATH` then you can do 'make MinGW=YES' which will build an
+    `.exe` on Windows.
 
   * There is a `CMakeLists.txt` file you can use to generate Ninja, MSVC or
-    MinGW makefile projects for Windows. You can also use the CMakeLists.txt
-    file on Linux/OS X too, of course.
+    MinGW makefile projects for Windows as well. You can of course use `cmake`
+    on Linux/OS X as well.
 
 ## Customization notes.
 
 You can change the patch file's magic number by modifying `BSDIFF_CONFIG_MAGIC`
-in `minibsdiff-config.h`.
+in `minibsdiff-config.h`. It must be 8 bytes long (anything beyond that will be
+ignored.) This library by default has the magic number `MBSDIF43`.
 
 ---
 
@@ -137,10 +142,20 @@ place!
 
 Not having compression by default is still a feature, though - it keeps the
 library simple and portable, and you can layer it in however you want because
-the source is small and easy to hack. But this should be noted because,
-realistically, you'll **always** want to compress it at one point or another in
-the Real World.
+the source is small and easy to hack. But realistically, you'll **always** want
+to compress it at one point or another in the Real World.
 
+Here are some good compression libraries you might be interested in:
+
+  * [zlib](http://www.zlib.net)
+  * [gzip](http://www.gzip.org)
+  * [lz4](http://code.google.com/p/lz4)
+  * [snappy](http://code.google.com/p/snappy)
+  * [quicklz](http://www.quicklz.com)
+
+In my non-scientific experiments, **bzip at compression level 9 gives the best
+output size** out of all the ones listed above. It's obviously worth
+sacrificing compression time/speed for smaller updates that decompress quickly.
 
 # Join in
 
@@ -154,11 +169,12 @@ There's also a [BitBucket mirror][bb]:
 
 * `git clone https://bitbucket.org/thoughtpolice/minibsdiff.git`
 
-If you're going to submit a pull request, **sign off on your changes** by using
-`git commit -s`. I manage the `Signed-off by` field like git: by signing off,
-you acknowledge that the code you are submitting abides by the license of the
-project. An `Acked-by` field states that someone has reviewed this code, and
-it's not completely insane at the very least.
+If you're going to submit a pull request or send a patch, **sign off on your
+changes** by using `git commit -s`. I manage the `Signed-off by` field like
+git: by signing off, you acknowledge that the code you are submitting for
+inclusion bides by the license of the project. An `Acked-by` field states that
+someone has reviewed this code, and at the very least it is not completely
+insane.
 
 # Authors
 
