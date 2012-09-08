@@ -50,6 +50,9 @@ shouldn't need any special build settings for it to Just Work(TM).
 ## API
 
 ```c
+#include "bsdiff.h"
+#include "bspatch.h"
+
 /*-
  * Determine the maximum size of a patch between two files. This function
  * should be used to allocate a buffer big enough for `bsdiff` to store
