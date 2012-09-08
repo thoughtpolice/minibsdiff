@@ -1,6 +1,6 @@
-# minibsdiff: a miniature, portable version of bsdiff.
+# minibsdiff: a miniature, portable version of bsdiff [![Build Status][]](http://travis-ci.org/thoughtpolice/minibsdiff)
 
-[travis-ci.org](http://travis-ci.org) results: [![Build Status](https://secure.travis-ci.org/thoughtpolice/minibsdiff.png?branch=master)](http://travis-ci.org/thoughtpolice/minibsdiff)
+[Build Status]: https://secure.travis-ci.org/thoughtpolice/minibsdiff.png?branch=master
 
 Colin Percival's [bsdiff][] is a popular tool for creating and applying patches
 to binary software. This is a stripped down copy of `bsdiff` that's designed to
