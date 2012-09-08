@@ -172,7 +172,7 @@ There's also a [BitBucket mirror][bb]:
 If you're going to submit a pull request or send a patch, **sign off on your
 changes** by using `git commit -s`. I manage the `Signed-off by` field like
 git: by signing off, you acknowledge that the code you are submitting for
-inclusion bides by the license of the project. An `Acked-by` field states that
+inclusion abides by the license of the project. An `Acked-by` field states that
 someone has reviewed this code, and at the very least it is not completely
 insane.
 
