@@ -51,40 +51,61 @@ shouldn't need any special build settings for it to Just Work(TM).
 
 ```c
 /*-
- * Create a patch from two byte arrays.
+ * Determine the maximum size of a patch between two files. This function
+ * should be used to allocate a buffer big enough for `bsdiff` to store
+ * its output in.
+ */
+off_t bsdiff_patchsize_max(off_t oldsize, off_t newsize);
+
+/*-
+ * Create a binary patch from the buffers pointed to by oldp and newp (with
+ * respective sizes,) and store the result in the buffer pointed to by 'patch'.
  *
- * The input pointer 'patch' must be NULL before usage.
+ * The input pointer 'patch' must not be NULL, and the size of the buffer must
+ * be at least 'bsdiff_patchsize_max(new,old)' in length.
  *
- * Returns -1 if memory can't be allocated, or `*patch` is
- * not NULL. Otherwise, returns the size of the patch stored
- * in `patch`.
+ * Returns -1 if `patch` is NULL, the 'patch' buffer is not large enough, or if
+ * memory cannot be allocated.
+ * Otherwise, the return value is the size of the patch that was put in the
+ * 'patch' buffer.
  *
- * The `patch` variable must be explicitly free()'d
- * if the function is successful after it's used.
  */
 int bsdiff(u_char* oldp, off_t oldsize,
            u_char* newp, off_t newsize,
-           u_char** patch);
+           u_char* patch, off_t patchsize);
 
-/** Check if a patch header is valid */
+/*-
+ * Determine if the buffer pointed to by `patch` of a given `size` is
+ * a valid patch.
+ */
 bool bspatch_valid_header(u_char* patch, ssize_t patchsz);
 
 /*-
- * Apply a patch to a byte array.
+ * Determine the size of the new file that will result from applying
+ * a patch. Returns -1 if the patch header is invalid, otherwise returns
+ * the size of the new file.
+ */
+ssize_t bspatch_newsize(u_char* patch, ssize_t patchsize);
+
+/*-
+ * Apply a patch stored in 'patch' to 'oldp', result in 'newp', and store the
+ * result in 'newp'.
  *
- * The input pointer 'newp' must be NULL before usage.
+ * The input pointers must not be NULL.
  *
- * Returns -1 if memory can't be allocated, or the input
- * pointer `*inp` is not NULL. Returns -2 if the patch
- * header is invalid. Returns -3 if the patch itself is
- * corrupt. Otherwise, returns 0.
+ * The size of 'newp', represented by 'newsz', must be at least
+ * 'bspatch_newsize(oldsz,patchsz)' bytes in length.
  *
- * The output pointer 'newp' must be free()'d after usage
- * if this function is successful.
+ * Returns -1 if memory can't be allocated, or the input pointers are NULL.
+ * Returns -2 if the patch header is invalid. Returns -3 if the patch itself is
+ * corrupt.
+ * Otherwise, returns 0.
+ *
  */
 int bspatch(u_char* oldp,  ssize_t oldsz,
             u_char* patch, ssize_t patchsz,
-            u_char** newp, ssize_t* newsz);
+            u_char* newp,  ssize_t newsz);
+
 ```
 
 ## Building the example program.

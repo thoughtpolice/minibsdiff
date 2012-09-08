@@ -32,8 +32,28 @@
 /* ------------------------------------------------------------------------- */
 /* -- Public API ----------------------------------------------------------- */
 
+/*-
+ * Determine the maximum size of a patch between two files. This function
+ * should be used to allocate a buffer big enough for `bsdiff` to store
+ * its output in.
+ */
+off_t bsdiff_patchsize_max(off_t oldsize, off_t newsize);
+
+/*-
+ * Create a binary patch from the buffers pointed to by oldp and newp (with
+ * respective sizes,) and store the result in the buffer pointed to by 'patch'.
+ *
+ * The input pointer 'patch' must not be NULL, and the size of the buffer must
+ * be at least 'bsdiff_patchsize_max(new,old)' in length.
+ *
+ * Returns -1 if `patch` is NULL, the 'patch' buffer is not large enough, or if
+ * memory cannot be allocated.
+ * Otherwise, the return value is the size of the patch that was put in the
+ * 'patch' buffer.
+ *
+ */
 int bsdiff(u_char* oldp, off_t oldsize,
            u_char* newp, off_t newsize,
-           u_char** patch);
+           u_char* patch, off_t patchsize);
 
 #endif /* _MINIBSDIFF_H_ */

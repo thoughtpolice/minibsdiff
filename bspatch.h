@@ -32,9 +32,36 @@
 /* ------------------------------------------------------------------------- */
 /* -- Public API ----------------------------------------------------------- */
 
+/*-
+ * Determine if the buffer pointed to by `patch` of a given `size` is
+ * a valid patch.
+ */
 bool bspatch_valid_header(u_char* patch, ssize_t patchsz);
+
+/*-
+ * Determine the size of the new file that will result from applying
+ * a patch. Returns -1 if the patch header is invalid, otherwise returns
+ * the size of the new file.
+ */
+ssize_t bspatch_newsize(u_char* patch, ssize_t patchsize);
+
+/*-
+ * Apply a patch stored in 'patch' to 'oldp', result in 'newp', and store the
+ * result in 'newp'.
+ *
+ * The input pointers must not be NULL.
+ *
+ * The size of 'newp', represented by 'newsz', must be at least
+ * 'bspatch_newsize(oldsz,patchsz)' bytes in length.
+ *
+ * Returns -1 if memory can't be allocated, or the input pointers are NULL.
+ * Returns -2 if the patch header is invalid. Returns -3 if the patch itself is
+ * corrupt.
+ * Otherwise, returns 0.
+ *
+ */
 int bspatch(u_char* oldp,  ssize_t oldsz,
             u_char* patch, ssize_t patchsz,
-            u_char** newp, ssize_t* newsz);
+            u_char* newp,  ssize_t newsz);
 
 #endif /* _MINIBSPATCH_H_ */

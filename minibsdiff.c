@@ -117,7 +117,8 @@ diff(const char* oldf, const char* newf, const char* patchf)
   u_char* old;
   u_char* new;
   u_char* patch;
-  long oldsz, newsz, patchsz;
+  long oldsz, newsz;
+  off_t patchsz;
   int res;
 
   printf("Generating binary patch between %s and %s\n", oldf, newf);
@@ -129,10 +130,13 @@ diff(const char* oldf, const char* newf, const char* patchf)
 
   /* Compute delta */
   printf("Computing binary delta...\n");
-  patch = NULL;
-  res = bsdiff(old, oldsz, new, newsz, &patch);
+
+  patchsz = bsdiff_patchsize_max(oldsz, newsz);
+  patch = malloc(patchsz+1); /* Never malloc(0) */
+  res = bsdiff(old, oldsz, new, newsz, patch, patchsz);
   if (res <= 0) barf("bsdiff() failed!");
   patchsz = res;
+
   printf("sizeof(delta('%s', '%s')) = %lu bytes\n", oldf, newf, patchsz);
 
   /* Write patch */
@@ -164,8 +168,11 @@ patch(const char* inf, const char* patchf, const char* outf)
   printf("Old file = %lu bytes\nPatch file = %lu bytes\n", insz, patchsz);
 
   /* Apply delta */
-  newp = NULL;
-  res = bspatch(inp, insz, patchp, patchsz, &newp, &newsz);
+  newsz = bspatch_newsize(patchp, patchsz);
+  if (newsz <= 0) barf("Couldn't determine new file size; patch corrupt!");
+
+  newp = malloc(newsz+1); /* Never malloc(0) */
+  res = bspatch(inp, insz, patchp, patchsz, newp, newsz);
   if (res != 0) barf("bspatch() failed!");
 
   /* Write new file */

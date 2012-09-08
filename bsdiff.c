@@ -45,12 +45,13 @@ __FBSDID("$FreeBSD: src/usr.bin/bsdiff/bsdiff/bsdiff.c,v 1.1 2005/08/06 01:59:05
    24 8       length of new file */
 /* File is
    0  32      Header
-   32 ??      Bzip2ed ctrl block
-   ?? ??      Bzip2ed diff block
-   ?? ??      Bzip2ed extra block */
+   32 ??      ctrl block
+   ?? ??      diff block
+   ?? ??      extra block */
 
 
-static void split(off_t *I,off_t *V,off_t start,off_t len,off_t h)
+static void
+split(off_t *I,off_t *V,off_t start,off_t len,off_t h)
 {
   off_t i,j,k,x,tmp,jj,kk;
 
@@ -111,7 +112,8 @@ static void split(off_t *I,off_t *V,off_t start,off_t len,off_t h)
   if(start+len>kk) split(I,V,kk,start+len-kk,h);
 }
 
-static void qsufsort(off_t *I,off_t *V,u_char *old,off_t oldsize)
+static void
+qsufsort(off_t *I,off_t *V,u_char *old,off_t oldsize)
 {
   off_t buckets[256];
   off_t i,h,len;
@@ -149,7 +151,8 @@ static void qsufsort(off_t *I,off_t *V,u_char *old,off_t oldsize)
   for(i=0;i<oldsize+1;i++) I[V[i]]=i;
 }
 
-static off_t matchlen(u_char *oldp,off_t oldsize,u_char *newp,off_t newsize)
+static off_t
+matchlen(u_char *oldp,off_t oldsize,u_char *newp,off_t newsize)
 {
   off_t i;
 
@@ -159,8 +162,9 @@ static off_t matchlen(u_char *oldp,off_t oldsize,u_char *newp,off_t newsize)
   return i;
 }
 
-static off_t search(off_t *I,u_char *oldp,off_t oldsize,
-                    u_char *newp,off_t newsize,off_t st,off_t en,off_t *pos)
+static off_t
+search(off_t *I,u_char *oldp,off_t oldsize,
+       u_char *newp,off_t newsize,off_t st,off_t en,off_t *pos)
 {
   off_t x,y;
 
@@ -185,7 +189,8 @@ static off_t search(off_t *I,u_char *oldp,off_t oldsize,
   };
 }
 
-static void offtout(off_t x,u_char *buf)
+static void
+offtout(off_t x,u_char *buf)
 {
   off_t y;
 
@@ -203,9 +208,15 @@ static void offtout(off_t x,u_char *buf)
   if(x<0) buf[7]|=0x80;
 }
 
+off_t
+bsdiff_patchsize_max(off_t newsize, off_t oldsize)
+{
+  return newsize+oldsize+1024;
+}
+
 int bsdiff(u_char* oldp, off_t oldsize,
            u_char* newp, off_t newsize,
-           u_char** patchp)
+           u_char* patch, off_t patchsz)
 {
   off_t *I,*V;
   off_t scan,pos,len;
@@ -219,16 +230,13 @@ int bsdiff(u_char* oldp, off_t oldsize,
   u_char buf[8];
   u_char header[32];
   u_char *fileblock;
-  u_char *patch;
 
   off_t ctrllen;
 
   /* Sanity checks */
-  if (*patchp != NULL) return -1;
-  /* Allocate for size of patch. Worst case, the files are totally different,
-   * so we'll require new+old amount of space. Add slop for safety. */
-  if ((*patchp = malloc(oldsize+newsize+1024)) == NULL) return -1;
-  patch = *patchp;
+  if (oldp == NULL || newp == NULL || patch == NULL) return -1;
+  if (oldsize < 0 || newsize < 0 || patchsz < 0)     return -1;
+  if (bsdiff_patchsize_max(oldsize, newsize) > patchsz) return -1;
 
   /* Allocate oldsize+1 bytes instead of oldsize bytes to ensure
      that we never try to malloc(0) and get a NULL pointer */
@@ -242,7 +250,10 @@ int bsdiff(u_char* oldp, off_t oldsize,
   /* Allocate newsize+1 bytes instead of newsize bytes to ensure
      that we never try to malloc(0) and get a NULL pointer */
   if(((db=malloc(newsize+1))==NULL) ||
-     ((eb=malloc(newsize+1))==NULL)) return -1;
+     ((eb=malloc(newsize+1))==NULL)) {
+    free(I);
+    return -1;
+  }
   dblen=0;
   eblen=0;
 

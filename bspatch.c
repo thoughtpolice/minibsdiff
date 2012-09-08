@@ -50,7 +50,8 @@ __FBSDID("$FreeBSD: src/usr.bin/bsdiff/bspatch/bspatch.c,v 1.1 2005/08/06 01:59:
   extra block; seek forwards in oldfile by z bytes".
 */
 
-static off_t offtin(u_char *buf)
+static off_t
+offtin(u_char *buf)
 {
   off_t y;
 
@@ -68,11 +69,12 @@ static off_t offtin(u_char *buf)
   return y;
 }
 
-bool bspatch_valid_header(u_char* patch, ssize_t patchsize)
+bool
+bspatch_valid_header(u_char* patch, ssize_t patchsz)
 {
   ssize_t newsize, ctrllen, datalen;
 
-  if (patchsize < 32) return false;
+  if (patchsz < 32) return false;
 
   /* Make sure magic and header fields are valid */
   if(memcmp(patch, BSDIFF_CONFIG_MAGIC, 8) != 0) return false;
@@ -86,30 +88,34 @@ bool bspatch_valid_header(u_char* patch, ssize_t patchsize)
   return true;
 }
 
-int bspatch(u_char* oldp,  ssize_t   oldsize,
-            u_char* patch, ssize_t patchsize,
-            u_char** newp,  ssize_t* newsz)
+ssize_t
+bspatch_newsize(u_char* patch, ssize_t patchsz)
+{
+  if (!bspatch_valid_header(patch, patchsz)) return -1;
+  return offtin(patch+24);
+}
+
+int
+bspatch(u_char* oldp,  ssize_t oldsz,
+        u_char* patch, ssize_t patchsz,
+        u_char* newp,  ssize_t newsz)
 {
   ssize_t newsize,ctrllen,datalen;
   u_char *ctrlblock, *diffblock, *extrablock;
   off_t oldpos,newpos;
   off_t ctrl[3];
   off_t i;
-  u_char* newpp;
 
   /* Sanity checks */
-  if (*newp != NULL) return -1;
-  if (!bspatch_valid_header(patch, patchsize)) return -2;
+  if (oldp == NULL || patch == NULL || newp == NULL) return -1;
+  if (oldsz < 0    || patchsz < 0   || newsz < 0)    return -1;
+  if (!bspatch_valid_header(patch, patchsz)) return -2;
 
   /* Read lengths from patch header */
   ctrllen=offtin(patch+8);
   datalen=offtin(patch+16);
   newsize=offtin(patch+24);
-
-  /* Set up our output; allocate newsize+1 so we never malloc(0) */
-  *newsz = newsize;
-  if ((*newp = malloc(newsize+1)) == NULL) return -1;
-  newpp = *newp;
+  if (newsize > newsz) return -1;
 
   /* Get pointers into the header metadata */
   ctrlblock  = patch+32;
@@ -125,29 +131,29 @@ int bspatch(u_char* oldp,  ssize_t   oldsize,
     ctrl[2] = offtin(ctrlblock+16);
     ctrlblock += 24;
 
-    /* Sanity-check */
+    /* Sanity check */
     if(newpos+ctrl[0]>newsize)
       return -3; /* Corrupt patch */
 
     /* Read diff string */
-    memcpy(newpp + newpos, diffblock, ctrl[0]);
+    memcpy(newp + newpos, diffblock, ctrl[0]);
     diffblock += ctrl[0];
 
     /* Add old data to diff string */
     for(i=0;i<ctrl[0];i++)
-      if((oldpos+i>=0) && (oldpos+i<oldsize))
-        newpp[newpos+i]+=oldp[oldpos+i];
+      if((oldpos+i>=0) && (oldpos+i<oldsz))
+        newp[newpos+i]+=oldp[oldpos+i];
 
     /* Adjust pointers */
     newpos+=ctrl[0];
     oldpos+=ctrl[0];
 
-    /* Sanity-check */
+    /* Sanity check */
     if(newpos+ctrl[1]>newsize)
       return -3; /* Corrupt patch */
 
     /* Read extra string */
-    memcpy(newpp + newpos, extrablock, ctrl[1]);
+    memcpy(newp + newpos, extrablock, ctrl[1]);
     extrablock += ctrl[1];
 
     /* Adjust pointers */
