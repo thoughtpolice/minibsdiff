@@ -115,7 +115,7 @@ reimplements the standard `bsdiff/bspatch` in a single tool (without
 compression.) To build it:
 
   * Running `make` on Linux or OS X. If you have MinGW installed and on
-    your `PATH` then you can do 'make MinGW=YES' which will build an
+    your `PATH` then you can do `make MinGW=YES` which will build an
     `.exe` on Windows.
 
   * There is a `CMakeLists.txt` file you can use to generate Ninja, MSVC or
