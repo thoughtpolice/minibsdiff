@@ -44,6 +44,11 @@
 #define BSDIFF_CONFIG_MAGIC "MBSDIF43"
 
 /* ------------------------------------------------------------------------- */
+/* -- Slop size for temporary patch buffer --------------------------------- */
+
+#define BSDIFF_PATCH_SLOP_SIZE 102400
+
+/* ------------------------------------------------------------------------- */
 /* -- Type definitions ----------------------------------------------------- */
 
 /* Duplicated to keep code small. Keep in sync with bspatch.h! */
