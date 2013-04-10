@@ -1,3 +1,15 @@
-Austin Seipp <mad [dot] one [@at] gmail [dot] com>
-Colin Percival <cperciva [@at] freebsd [dot] org>
-Tres Walsh <tres [dot] walsh [@at] mnmlstc [dot] com>
+bsdiff was originally written by:
+
+  Colin Percival <cperciva [@at] freebsd [.dot] org>
+
+Current maintainer, target of blame:
+
+  Austin Seipp <aseipp [@at] pobox [.dot] com>
+
+People who contributed code, ideas or lively discussion include, in no
+particular order:
+
+  Tres Walsh <tres [.dot] walsh [@at] mnmlstc [dot] com>
+  Ray Cheung <ray [.dot] swc [@at] gmail [dot] com>
+
+If you're not mentioned above but would like to be, please contact me.
