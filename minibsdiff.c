@@ -137,7 +137,7 @@ diff(const char* oldf, const char* newf, const char* patchf)
   if (res <= 0) barf("bsdiff() failed!");
   patchsz = res;
 
-  printf("sizeof(delta('%s', '%s')) = %lu bytes\n", oldf, newf, patchsz);
+  printf("sizeof(delta('%s', '%s')) = %llu bytes\n", oldf, newf, patchsz);
 
   /* Write patch */
   write_file(patchf, patch, patchsz);
