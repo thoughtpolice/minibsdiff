@@ -1,5 +1,5 @@
 /*-
- * Copyright 2012 Austin Seipp
+ * Copyright 2012-2013 Austin Seipp
  * Copyright 2003-2005 Colin Percival
  * All rights reserved
  *

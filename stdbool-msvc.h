@@ -1,7 +1,7 @@
 /*-
  * stdbool-msvc.h - simple replacement for stdboo.h under Visual Studio
  *
- * Copyright 2012 Austin Seipp
+ * Copyright 2012-2013 Austin Seipp
  * All rights reserved
  *
  * Redistribution and use in source and binary forms, with or without
