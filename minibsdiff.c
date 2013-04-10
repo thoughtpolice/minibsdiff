@@ -121,15 +121,22 @@ diff(const char* oldf, const char* newf, const char* patchf)
   off_t patchsz;
   int res;
 
+#ifndef NDEBUG
   printf("Generating binary patch between %s and %s\n", oldf, newf);
+#endif /* NDEBUG */
 
   /* Read old and new files */
   oldsz = read_file(oldf, &old);
   newsz = read_file(newf, &new);
+
+#ifndef NDEBUG
   printf("Old file = %lu bytes\nNew file = %lu bytes\n", oldsz, newsz);
+#endif /* NDEBUG */
 
   /* Compute delta */
+#ifndef NDEBUG
   printf("Computing binary delta...\n");
+#endif /* NDEBUG */
 
   patchsz = bsdiff_patchsize_max(oldsz, newsz);
   patch = malloc(patchsz+1); /* Never malloc(0) */
@@ -137,7 +144,9 @@ diff(const char* oldf, const char* newf, const char* patchf)
   if (res <= 0) barf("bsdiff() failed!");
   patchsz = res;
 
+#ifndef NDEBUG
   printf("sizeof(delta('%s', '%s')) = %llu bytes\n", oldf, newf, patchsz);
+#endif /* NDEBUG */
 
   /* Write patch */
   write_file(patchf, patch, patchsz);
@@ -146,7 +155,9 @@ diff(const char* oldf, const char* newf, const char* patchf)
   free(new);
   free(patch);
 
+#ifndef NDEBUG
   printf("Created patch file %s\n", patchf);
+#endif /* NDEBUG */
   exit(EXIT_SUCCESS);
 }
 
@@ -160,12 +171,16 @@ patch(const char* inf, const char* patchf, const char* outf)
   ssize_t newsz;
   int res;
 
+#ifndef NDEBUG
   printf("Applying binary patch %s to %s\n", patchf, inf);
+#endif /* NDEBUG */
 
   /* Read old file and patch file */
   insz    = read_file(inf, &inp);
   patchsz = read_file(patchf, &patchp);
+#ifndef NDEBUG
   printf("Old file = %lu bytes\nPatch file = %lu bytes\n", insz, patchsz);
+#endif /* NDEBUG */
 
   /* Apply delta */
   newsz = bspatch_newsize(patchp, patchsz);
@@ -182,7 +197,9 @@ patch(const char* inf, const char* patchf, const char* outf)
   free(patchp);
   free(newp);
 
+#ifndef NDEBUG
   printf("Successfully applied patch; new file is %s\n", outf);
+#endif /* NDEBUG */
   exit(EXIT_SUCCESS);
 }
 

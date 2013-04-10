@@ -9,7 +9,8 @@ SRC=minibsdiff
 CCOPTS?=-Wall -Wextra -Wmissing-prototypes -Wstrict-prototypes \
     -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align          \
     -Wwrite-strings -Wnested-externs                           \
-    -pedantic -std=c99
+    -pedantic -std=c99 \
+    -DNDEBUG # Turn off when needed
 
 SCANBUILD?=scan-build
 SCANOPTS?=-analyze-headers --use-analyzer $(shell which clang)

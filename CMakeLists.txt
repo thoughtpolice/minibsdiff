@@ -24,6 +24,7 @@ else ()
     -Wall -Wextra -Wmissing-prototypes -Wstrict-prototypes
     -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align
     -Wwrite-strings -Wnested-externs
+    -DNDEBUG # Turn off when needed
     # Disable some stuff for now. Maybe one day...
     # -Wconversion
     )
