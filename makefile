@@ -16,7 +16,7 @@ SCANBUILD?=scan-build
 SCANOPTS?=-analyze-headers --use-analyzer $(shell which clang)
 
 all:
-	$(CC) $(CCOPTS) -pipe -march=native -O3 $(SRC).c -o $(SRC)$(EXT)
+	$(CC) $(CCOPTS) -O3 $(SRC).c -o $(SRC)$(EXT)
 debug:
 	$(CC) $(CCOPTS) -g -O0 $(SRC).c -o $(SRC)$(EXT)
 analyze:
