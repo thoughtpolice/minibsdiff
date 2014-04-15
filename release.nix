@@ -86,6 +86,7 @@ let
       src = jobs.tarball;
       diskImage = diskImageFun vmTools.diskImages;
       meta = { schedulingPriority = prio; };
+      debMaintainer = "Austin Seipp <aseipp@pobox.com>";
     };
 
 in jobs
