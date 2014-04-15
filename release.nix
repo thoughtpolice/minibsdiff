@@ -44,8 +44,6 @@ let
       }
     );
 
-    deb_ubuntu1310x86_64 = makeDeb_x86_64 (diskImages: diskImages.ubuntu1310x86_64) 90;
-
     ## -- Release build --------------------------------------------------------
     release = pkgs.releaseTools.aggregate
       { name = "minibsdiff-${tarball.version}";
