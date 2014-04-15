@@ -122,7 +122,7 @@ let
     with import <nixpkgs> { inherit system; };
 
     releaseTools.rpmBuild rec {
-      name = "patchelf-rpm";
+      name = "minibsdiff-rpm";
       src = jobs.tarball;
       diskImage = diskImageFun vmTools.diskImages;
       meta = { schedulingPriority = prio; };
@@ -138,7 +138,7 @@ let
     with import <nixpkgs> { inherit system; };
 
     releaseTools.debBuild {
-      name = "patchelf-deb";
+      name = "minibsdiff-deb";
       src = jobs.tarball;
       diskImage = diskImageFun vmTools.diskImages;
       meta = { schedulingPriority = prio; };
