@@ -5,7 +5,7 @@
 let
   pkgs = import <nixpkgs> { };
 
-  systems = [ "x86_64-linux" ];
+  systems = [ "i686-linux" "x86_64-linux" ];
 
   version = "0.0.1" + (pkgs.lib.optionalString (!officialRelease)
     "-pre${toString minibsdiff.revCount}_${minibsdiff.shortRev}");
