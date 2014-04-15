@@ -103,7 +103,7 @@ let
 
     ## -- Release build --------------------------------------------------------
     release = pkgs.releaseTools.aggregate
-      { name = "patchelf-${tarball.version}";
+      { name = "minibsdiff-${tarball.version}";
         constituents =
           [ tarball
             build.x86_64-linux
