@@ -44,4 +44,15 @@ rec {
       installPhase = "make install PREFIX=$out";
     }
   );
+
+  ## -- Release build ----------------------------------------------------------
+  release = pkgs.releaseTools.aggregate
+    { name = "patchelf-${tarball.version}";
+      constituents =
+        [ tarball
+          build.x86_64-linux
+        ];
+      meta.description = "Release-critical builds";
+    };
+
 }
