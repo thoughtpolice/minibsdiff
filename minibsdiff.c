@@ -145,7 +145,7 @@ diff(const char* oldf, const char* newf, const char* patchf)
   patchsz = res;
 
 #ifndef NDEBUG
-  printf("sizeof(delta('%s', '%s')) = %llu bytes\n", oldf, newf, patchsz);
+  printf("sizeof(delta('%s', '%s')) = %ld bytes\n", oldf, newf, patchsz);
 #endif /* NDEBUG */
 
   /* Write patch */
