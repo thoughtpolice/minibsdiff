@@ -241,7 +241,10 @@ int bsdiff(u_char* oldp, off_t oldsize,
   /* Allocate oldsize+1 bytes instead of oldsize bytes to ensure
      that we never try to malloc(0) and get a NULL pointer */
   if(((I=malloc((oldsize+1)*sizeof(off_t)))==NULL) ||
-     ((V=malloc((oldsize+1)*sizeof(off_t)))==NULL)) return -1;
+     ((V=malloc((oldsize+1)*sizeof(off_t)))==NULL)) {
+      if (I) free(I);
+      return -1;
+  }
 
   qsufsort(I,V,oldp,oldsize);
 
@@ -251,6 +254,7 @@ int bsdiff(u_char* oldp, off_t oldsize,
      that we never try to malloc(0) and get a NULL pointer */
   if(((db=malloc(newsize+1))==NULL) ||
      ((eb=malloc(newsize+1))==NULL)) {
+    if (db) free(db);
     free(I);
     return -1;
   }
