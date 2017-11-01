@@ -140,16 +140,18 @@ diff(const char* oldf, const char* newf, const char* patchf)
 
   patchsz = bsdiff_patchsize_max(oldsz, newsz);
   patch = malloc(patchsz+1); /* Never malloc(0) */
-  res = bsdiff(old, oldsz, new, newsz, patch, patchsz);
-  if (res <= 0) barf("bsdiff() failed!");
-  patchsz = res;
+  if (patch) {
+      res = bsdiff(old, oldsz, new, newsz, patch, patchsz);
+      if (res <= 0) barf("bsdiff() failed!");
+      patchsz = res;
 
-#ifndef NDEBUG
-  printf("sizeof(delta('%s', '%s')) = %ld bytes\n", oldf, newf, patchsz);
-#endif /* NDEBUG */
+    #ifndef NDEBUG
+      printf("sizeof(delta('%s', '%s')) = %ld bytes\n", oldf, newf, patchsz);
+    #endif /* NDEBUG */
 
-  /* Write patch */
-  write_file(patchf, patch, patchsz);
+      /* Write patch */
+      write_file(patchf, patch, patchsz);
+  }
 
   free(old);
   free(new);
